@@ -1,6 +1,1 @@
-python3 -m py_compile src/bpa/__init__.py 2>&1 && echo "PASS: src/bpa/__init__.py"
-python3 -m py_compile src/bpa/config.py 2>&1 && echo "PASS: src/bpa/config.py"
-python3 -m py_compile src/bpa/db.py 2>&1 && echo "PASS: src/bpa/db.py"
-python3 -m py_compile src/bpa/logging_setup.py 2>&1 && echo "PASS: src/bpa/logging_setup.py"
-python3 -m py_compile src/bpa/main.py 2>&1 && echo "PASS: src/bpa/main.py"
-python3 -m py_compile alembic/env.py 2>&1 && echo "PASS: alembic/env.py"
+find . -type f \( -name "*.py" -o -name "*.toml" -o -name "*.ini" -o -name "*.txt" \) | sort

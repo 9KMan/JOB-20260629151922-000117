@@ -1,1 +1,1 @@
-find . -type f \( -name "*.py" -o -name "*.toml" -o -name "*.ini" -o -name "*.txt" \) | sort
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

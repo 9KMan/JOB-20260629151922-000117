@@ -1,2 +1,1 @@
-ls -la pyproject.toml requirements.txt requirements-dev.txt alembic.ini README.md Dockerfile docker-compose.yml .gitignore .env.example .python-version
-ls -la src/bpa/ alembic/
+find . -type f \( -name "*.py" -o -name "*.toml" -o -name "*.ini" -o -name "*.mako" -o -name "*.txt" -o -name "Dockerfile" -o -name "docker-compose.yml" -o -name ".gitignore" -o -name ".env.example" \) | grep -v __pycache__ | sort

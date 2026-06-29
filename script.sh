@@ -1,1 +1,1 @@
-grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+find . -type f -not -path './.venv/*' -not -path './.git/*' -not -path './__pycache__/*' -not -path '*/__pycache__/*' | sort

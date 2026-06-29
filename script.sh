@@ -1,10 +1,9 @@
-echo "=== Files created ==="
-ls -la docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md README.md
-echo ""
-echo "=== File sizes (sanity) ==="
-wc -l docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md README.md
-echo ""
-echo "=== PHASE_LOG verification ==="
-echo -n "Pattern match count: "
-grep -cE "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
-echo "Required: >= 4"
+# 1. Clone & configure
+cp .env.example .env
+# edit .env with DB credentials, Telegram bot token, Google Sheets service-account JSON path
+
+# 2. Boot the stack
+docker compose up -d
+
+# 3. Verify
+curl http://localhost:8000/healthz

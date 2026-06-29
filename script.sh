@@ -1,4 +1,1 @@
-bash
-// script.sh
-mkdir -p src/bpa alembic tests
-
+mkdir -p docs/architecture

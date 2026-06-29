@@ -1,17 +1,21 @@
-# BPA Pipeline
+# Phase Log
 
-Business Process Automation — Web Scraping + Data Pipeline (MVP).
+Chronological record of phases, their status, deliverables, and verification
+notes for the Business Process Automation pipeline (MVP).
 
-## Stack
+---
 
-- Python 3.12
-- Playwright + httpx (scraping)
-- FastAPI + Uvicorn (API)
-- PostgreSQL + SQLAlchemy (async) + Alembic (storage)
-- APScheduler (cron jobs)
-- python-telegram-bot (notifications)
-- gspread (Google Sheets export)
-- structlog (structured logging)
+## Phase 1 — Project Overview — Complete
 
-## Local Development
+**Date:** 2026-06-29
+**Goal:** Establish foundational documentation (purpose, scope, success
+criteria, architecture) so subsequent phases operate from a shared baseline.
+
+**Deliverables:**
+
+- `docs/PROJECT_OVERVIEW.md` — full scope, success criteria, architecture, risks, phase map
+- `docs/GLOSSARY.md` — shared vocabulary for downstream phases
+- `README.md` — top-level entry point and quick-start pointer
+
+**Verification:**
 

@@ -1,41 +1,31 @@
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: bpa_postgres
     environment:
       POSTGRES_USER: bpa
       POSTGRES_PASSWORD: bpa
       POSTGRES_DB: bpa
-    volumes:
-      - bpa_pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    volumes:
+      - bpa_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U bpa -d bpa"]
+      test: ["CMD-SHELL", "pg_isready -U bpa"]
       interval: 5s
       timeout: 5s
-      retries: 10
+      retries: 5
 
   app:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
-    container_name: bpa_app
+    build: .
     depends_on:
       postgres:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql+asyncpg://bpa:bpa@postgres:5432/bpa
-      ENVIRONMENT: production
-      LOG_LEVEL: INFO
-      # Optional - uncomment to enable
-      # TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
-      # TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID}
-    volumes:
-      - .:/app
     ports:
       - "8000:8000"
-    command: ["uvicorn", "bpa.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    volumes:
+      - .:/app
 
 volumes:
   bpa_pgdata:

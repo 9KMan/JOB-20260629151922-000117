@@ -11,25 +11,23 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from bpa.config import get_settings
 
-# Import models so that Base.metadata is populated for autogenerate.
-# Models will be registered in subsequent phases via bpa.models.
 
 config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# Override sqlalchemy.url from app settings (single source of truth).
 settings = get_settings()
 config.set_main_option("sqlalchemy.url", str(settings.database_url))
 
-target_metadata = None  # populated in phase 2 when ORM models are added
+target_metadata = None
 
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode."""
+    url = config.get_main_option("sqlalchemy.url")
     context.configure(
-        url=config.get_main_option("sqlalchemy.url"),
+        url=url,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},

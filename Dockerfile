@@ -5,16 +5,15 @@ WORKDIR /app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY pyproject.toml ./
-COPY src ./src
-COPY alembic ./alembic
+COPY src/ ./src/
+COPY alembic/ ./alembic/
 COPY alembic.ini ./
+COPY pyproject.toml ./
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PATH="/app:${PATH}"
-
-RUN pip install --no-cache-dir -e .
+    PATH="/app:${PATH}" \
+    PYTHONPATH="/app:${PYTHONPATH}"
 
 EXPOSE 8000
 

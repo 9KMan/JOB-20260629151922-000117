@@ -1,1 +1,1 @@
-python3 -c "import ast; [ast.parse(open(f).read()) for f in ['src/bpa/__init__.py','src/bpa/config.py','src/bpa/db.py','src/bpa/logging_setup.py','src/bpa/main.py','alembic/env.py']]; print('All Python files parse OK')"
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

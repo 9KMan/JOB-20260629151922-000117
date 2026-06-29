@@ -1,1 +1,2 @@
-ls -la && echo "---" && ls -la src/bpa && echo "---" && ls -la alembic
+mkdir -p src/bpa alembic
+echo "✓ Directory structure created"

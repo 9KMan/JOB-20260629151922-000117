@@ -1,3 +1,1 @@
-ruff check src
-mypy src
-pytest
+echo "=== match count ==="; grep -cE "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

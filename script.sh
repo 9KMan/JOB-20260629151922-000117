@@ -1,1 +1,3 @@
-ls -la pyproject.toml requirements.txt requirements-dev.txt .python-version alembic.ini alembic/env.py alembic/script.py.mako src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py
+# Returns ≥ 4 matches when Phase 1 is recorded as Complete with the three
+# deliverable file paths listed.
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

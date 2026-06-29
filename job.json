@@ -1,0 +1,71 @@
+{
+  "source": "upwork",
+  "upwork_url": "https://www.upwork.com/jobs/~022071567341570058217",
+  "title": "Business Process Automation - Web Scraping + Data Pipeline (MVP)",
+  "description": "I need a simple automation MVP- scrape data from 2-3 websites, clean it, and deliver structured reports. Nothing complex, just something that replaces manual copy-paste work. The idea: scrape business data from target sites using Selenium or Playwright, extract and parse the data, clean it into structured CSV or Google Sheets, and set up a scheduled pipeline (cron) that runs automatically. Optional: a Telegram bot that sends a summary when new data is available. This is mainly a business process automation task - web scraping, data extraction, data cleaning, scheduled execution, and structured output. Backend experience is useful (working with HTTP requests, parsing data, building repeatable workflows). Optional: PostgreSQL for storage or logging setup. No heavy system design, no scaling, no complex infrastructure - just a clean MVP that replaces a manual workflow and can be extended later.",
+  "skills": [
+    "Automation",
+    "Business Process Automation",
+    "Data Extraction",
+    "API Integration",
+    "Scripting",
+    "Selenium",
+    "Node.js",
+    "TypeScript",
+    "Python",
+    "Web Scraping"
+  ],
+  "tier": "MEDIUM",
+  "priority": 5,
+  "state": "BUILDING",
+  "budget": "$30-$60/hr",
+  "rate": "$50/hr",
+  "client": "Worldwide (Expert tier, willing to pay higher rates)",
+  "duration": "Less than 1 month, less than 30 hrs/week",
+  "intake_source": "manual/Upwork-paste",
+  "history": [
+    {
+      "ts": "2026-06-29T00:00:00+00:00",
+      "from": null,
+      "to": "INTAKE",
+      "actor": "user",
+      "note": "Pasted into Telegram by Super KMan"
+    }
+  ],
+  "notes": "Built-Before-Bid style: prototype repo as credibility. Stack: Python + Playwright + ETL pipeline (fastapi-postgres-crud template + ETL graft per Bug 184). Budget \\$30-\\$60/hr ceiling = 120% of \\$50 market floor -> ALIGNED. Tier EXPERT willing-to-pay-higher.",
+  "tech_stack": [
+    "Automation",
+    "Business Process Automation",
+    "Data Extraction",
+    "API Integration",
+    "Scripting",
+    "Selenium",
+    "Node.js",
+    "TypeScript",
+    "Python",
+    "Web Scraping"
+  ],
+  "job_id": "JOB-20260629151922-000117",
+  "created_at": "2026-06-29T15:19:22.337034+00:00",
+  "cto_approved": true,
+  "_version": 11,
+  "retry_count": 0,
+  "build_issue_id": null,
+  "confidence": 0.0,
+  "tags": [],
+  "full_description": "I need a simple automation MVP- scrape data from 2-3 websites, clean it, and deliver structured reports. Nothing complex, just something that replaces manual copy-paste work. The idea: scrape business data from target sites using Selenium or Playwright, extract and parse the data, clean it into structured CSV or Google Sheets, and set up a scheduled pipeline (cron) that runs automatically. Optional: a Telegram bot that sends a summary when new data is available. This is mainly a business process automation task - web scraping, data extraction, data cleaning, scheduled execution, and structured output. Backend experience is useful (working with HTTP requests, parsing data, building repeatable workflows). Optional: PostgreSQL for storage or logging setup. No heavy system design, no scaling, no complex infrastructure - just a clean MVP that replaces a manual workflow and can be extended later.",
+  "lead_url": "",
+  "github_url": "https://github.com/9KMan/JOB-20260629151922-000117",
+  "github_repo": "9KMan/JOB-20260629151922-000117",
+  "ceo_review_issue_id": "54b2cb95-fa6c-400e-8ef0-330d93e0fa1b",
+  "updated_at": "2026-06-29T15:33:12.531181+00:00",
+  "ceo_verdict": {
+    "verdict": "a",
+    "label": "APPROVED",
+    "confidence": "high",
+    "stored_at": "2026-06-29T15:34:59.051028+00:00"
+  },
+  "assignee": null,
+  "assigned_at": null,
+  "cto_approved_at": "2026-06-29T16:03:42.934752+00:00"
+}

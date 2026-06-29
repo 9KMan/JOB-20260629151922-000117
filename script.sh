@@ -1,5 +1,6 @@
-python3.12 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-dev.txt
-playwright install chromium
-uvicorn bpa.main:app --reload --app-dir src
+python3 -m py_compile src/bpa/__init__.py && echo "OK: __init__.py"
+python3 -m py_compile src/bpa/config.py && echo "OK: config.py"
+python3 -m py_compile src/bpa/db.py && echo "OK: db.py"
+python3 -m py_compile src/bpa/logging_setup.py && echo "OK: logging_setup.py"
+python3 -m py_compile src/bpa/main.py && echo "OK: main.py"
+python3 -m py_compile alembic/env.py && echo "OK: env.py"

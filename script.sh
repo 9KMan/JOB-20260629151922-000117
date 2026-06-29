@@ -1,8 +1,13 @@
-# After Phase 2 lands, this one-liner boots the entire stack:
-docker compose up -d
-
-# Manual scrape run (Operator CLI):
-docker compose exec pipeline python -m pipeline.cli run --target <name>
-
-# Healthcheck:
-curl http://localhost:8000/healthz
+# Planned layout
+pipeline/
+  scrapers/      # Playwright + httpx adapters
+  parsers/       # Pydantic schemas and normalizers
+  db/            # SQLAlchemy models, Alembic migrations
+  delivery/      # CSV, Sheets, Telegram
+  scheduler/     # APScheduler wiring
+  api/           # FastAPI app
+  cli.py         # python -m pipeline.cli
+tests/
+docker-compose.yml
+Dockerfile
+pyproject.toml

@@ -1,1 +1,1 @@
-find . -type f \( -name '*.py' -o -name '*.toml' -o -name '*.ini' -o -name '*.mako' -o -name 'Dockerfile' -o -name 'docker-compose.yml' -o -name 'requirements*.txt' -o -name '.gitignore' -o -name 'README.md' \) -not -path './.venv/*' | sort
+mkdir -p src/bpa alembic

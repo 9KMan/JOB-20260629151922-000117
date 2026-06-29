@@ -1,1 +1,1 @@
-ls -la README.md docs/
+curl http://localhost:8000/healthz

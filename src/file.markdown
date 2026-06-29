@@ -2,16 +2,26 @@
 
 Business Process Automation — Web Scraping + Data Pipeline (MVP).
 
-Automated ETL pipeline that scrapes business data from configured target sites,
-normalizes records with Pydantic, persists them in PostgreSQL with idempotent
-upserts, and delivers results via CSV / Google Sheets / Telegram.
+## Overview
+
+Automated ETL pipeline that:
+1. Scrapes business data from configurable target sites (Playwright)
+2. Cleans raw HTML into Pydantic-validated records
+3. Stores records in PostgreSQL with idempotent upserts
+4. Exports to CSV, Google Sheets, and Telegram summaries
+5. Runs on a cron schedule with retry/DLQ safety nets
 
 ## Stack
 
-- Python 3.12 + Playwright + FastAPI + PostgreSQL 15
-- SQLAlchemy 2 (async) + asyncpg + Alembic
-- APScheduler, python-telegram-bot, gspread
-- Structured logging via structlog
+- **Python 3.12** — runtime
+- **Playwright** — modern Chromium-based scraper
+- **FastAPI** — admin/health endpoints
+- **PostgreSQL 15** — persistent record store
+- **SQLAlchemy 2.0 (async)** — ORM + migrations via Alembic
+- **APScheduler** — in-process cron scheduling
+- **structlog** — structured JSON logging
 
-## Quickstart
+## Quick Start
+
+### Local (without Docker)
 

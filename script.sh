@@ -1,1 +1,8 @@
-alembic upgrade head
+# Lint
+ruff check .
+
+# Type-check
+mypy src
+
+# Tests
+pytest

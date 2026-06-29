@@ -1,31 +1,9 @@
-services:
-  postgres:
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_USER: bpa
-      POSTGRES_PASSWORD: bpa
-      POSTGRES_DB: bpa
-    ports:
-      - "5432:5432"
-    volumes:
-      - bpa_pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U bpa"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-
-  app:
-    build: .
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      DATABASE_URL: postgresql+asyncpg://bpa:bpa@postgres:5432/bpa
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/app
-
-volumes:
-  bpa_pgdata:
+targets:
+  - name: example-directory
+    url: https://example.com/listings
+    selector_map:
+      row: ".listing"
+      name: "h2.title"
+      phone: "a.tel"
+    schedule: "0 9 * * *"
+    enabled: true

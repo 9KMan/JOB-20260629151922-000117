@@ -1,0 +1,12 @@
+# config/targets.yaml
+targets:
+  - name: example_directory
+    url: https://example.com/listings
+    engine: playwright   # or "httpx"
+    schedule: "0 9 * * *"
+    enabled: true
+    selector_map:
+      row: "div.listing"
+      fields:
+        name: "h2.title"
+        phone: "a.tel"

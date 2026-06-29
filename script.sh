@@ -1,2 +1,1 @@
-docker compose up -d
-docker compose exec api alembic upgrade head
+echo "=== Final tree ===" && find . -type f -not -path './__pycache__/*' -not -path '*/__pycache__/*' -not -path './.git/*' | sort

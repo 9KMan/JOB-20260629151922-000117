@@ -1,6 +1,1 @@
-python3 -m py_compile src/bpa/__init__.py && echo "src/bpa/__init__.py OK"
-python3 -m py_compile src/bpa/config.py && echo "src/bpa/config.py OK"
-python3 -m py_compile src/bpa/db.py && echo "src/bpa/db.py OK"
-python3 -m py_compile src/bpa/logging_setup.py && echo "src/bpa/logging_setup.py OK"
-python3 -m py_compile src/bpa/main.py && echo "src/bpa/main.py OK"
-python3 -m py_compile alembic/env.py && echo "alembic/env.py OK"
+mkdir -p src/bpa alembic

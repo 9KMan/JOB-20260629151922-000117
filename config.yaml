@@ -2,9 +2,8 @@ targets:
   - name: example_directory
     url: https://example.com/listings
     selector_map:
-      row: ".listing"
+      row: ".listing-card"
       name: "h2.title"
       phone: ".contact .tel"
-      email: ".contact .email"
-    schedule: "0 9 * * *"   # daily at 09:00 UTC
+    schedule: "0 9 * * *"
     enabled: true

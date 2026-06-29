@@ -1,6 +1,1 @@
-python3 -c "import ast; ast.parse(open('src/bpa/config.py').read())" && echo "config.py: SYNTAX OK"
-python3 -c "import ast; ast.parse(open('src/bpa/db.py').read())" && echo "db.py: SYNTAX OK"
-python3 -c "import ast; ast.parse(open('src/bpa/logging_setup.py').read())" && echo "logging_setup.py: SYNTAX OK"
-python3 -c "import ast; ast.parse(open('src/bpa/main.py').read())" && echo "main.py: SYNTAX OK"
-python3 -c "import ast; ast.parse(open('alembic/env.py').read())" && echo "alembic/env.py: SYNTAX OK"
-python3 -c "import ast; ast.parse(open('src/bpa/__init__.py').read())" && echo "__init__.py: SYNTAX OK"
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

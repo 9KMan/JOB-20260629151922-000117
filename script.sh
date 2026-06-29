@@ -1,1 +1,1 @@
-echo "=== Final tree ===" && find . -type f -not -path './__pycache__/*' -not -path '*/__pycache__/*' -not -path './.git/*' | sort
+python3 -m py_compile src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py alembic/env.py && echo "ALL PYTHON FILES OK"

@@ -1,1 +1,1 @@
-mkdir -p src/bpa alembic
+mkdir -p docs

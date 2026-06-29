@@ -1,7 +1,2 @@
-# Run verification
-grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
-echo "---"
-echo "Match count:"
-grep -cE "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
-echo "---"
-ls -la README.md docs/
+python3 -c "import tomllib; tomllib.loads(open('pyproject.toml').read())" && echo "pyproject.toml: valid"
+python3 -c "import configparser; c = configparser.ConfigParser(); c.read('alembic.ini'); print('alembic.ini: valid, sections=', c.sections())"

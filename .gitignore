@@ -1,3 +1,24 @@
+__pycache__/
+*.egg-info/
+.venv/
+venv/
+.env
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+dist/
+build/
+.playwright/
+*.pyc
+*.pyo
+*.pyd
+.coverage
+.coverage.*
+node_modules/
+.DS_Store
+.idea/
+.vscode/
 
 # Worker-internal files — NEVER push to GitHub
 PROPOSAL.md
@@ -6,6 +27,3 @@ SPEC.txt
 TASK.txt
 pid
 role
-*.pyc
-__pycache__/
-.DS_Store

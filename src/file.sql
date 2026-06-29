@@ -1,7 +1,7 @@
-INSERT INTO scraper_targets (name, url, selector_map, schedule)
-VALUES (
-  'example_directory',
-  'https://example.com/listings',
-  '{"row": ".item", "name": "h2", "phone": ".tel"}'::jsonb,
-  '0 9 * * *'
-);
+id              SERIAL PK
+target_id       INT FK
+external_id     TEXT
+payload         JSONB
+error           TEXT
+failed_at       TIMESTAMPTZ
+retry_count     INT

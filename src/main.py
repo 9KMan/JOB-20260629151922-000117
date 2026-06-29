@@ -1,11 +1,10 @@
-"""Alembic environment - uses async SQLAlchemy engine."""
+"""Alembic environment - uses async SQLAlchemy engine from bpa.db."""
 from __future__ import annotations
 
 import asyncio
 from logging.config import fileConfig
 
 from alembic import context
-from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
@@ -48,7 +47,6 @@ async def run_migrations_online() -> None:
     connectable = async_engine_from_config(
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
     )
 
     async with connectable.connect() as connection:

@@ -1,7 +1,6 @@
 services:
   postgres:
     image: postgres:15-alpine
-    restart: unless-stopped
     environment:
       POSTGRES_USER: bpa
       POSTGRES_PASSWORD: bpa
@@ -14,18 +13,17 @@ services:
       test: ["CMD-SHELL", "pg_isready -U bpa -d bpa"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
 
   app:
     build: .
-    restart: unless-stopped
     depends_on:
       postgres:
         condition: service_healthy
     environment:
+      DATABASE_URL: postgresql+asyncpg://bpa:bpa@postgres:5432/bpa
       ENVIRONMENT: production
       LOG_LEVEL: INFO
-      DATABASE_URL: postgresql+asyncpg://bpa:bpa@postgres:5432/bpa
     ports:
       - "8000:8000"
     volumes:

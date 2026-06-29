@@ -1,1 +1,1 @@
-find . -type f -not -path './.git/*' | sort
+pwd && ls -la

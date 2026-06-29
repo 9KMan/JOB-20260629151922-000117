@@ -1,1 +1,1 @@
-mkdir -p docs/architecture
+mkdir -p src/models src/schemas migrations/versions

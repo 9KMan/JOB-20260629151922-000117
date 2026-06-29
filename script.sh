@@ -1,1 +1,5 @@
-ls -la docs/ && echo "---" && grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+for f in docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md README.md; do
+  echo "=== $f ==="
+  wc -l "$f"
+  file "$f"
+done

@@ -1,9 +1,12 @@
 targets:
   - name: example_directory
     url: https://example.com/listings
-    selector_map:
-      row: ".listing-card"
-      name: "h2.title"
-      phone: ".contact .tel"
     schedule: "0 9 * * *"
     enabled: true
+    selector_map:
+      row: ".item"
+      fields:
+        external_id: "a[data-id]::attr(data-id)"
+        name: "h2::text"
+        phone: ".tel::text"
+        source_url: "a::attr(href)"

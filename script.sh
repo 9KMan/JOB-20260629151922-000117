@@ -1,1 +1,5 @@
-echo "=== Line counts ===" && wc -l pyproject.toml src/bpa/*.py requirements.txt requirements-dev.txt alembic.ini alembic/env.py alembic/script.py.mako Dockerfile docker-compose.yml .gitignore README.md
+# Check for any malformed code fences or obvious issues
+for f in docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md README.md; do
+  echo "=== $f ==="
+  # Count code-fence opens vs closes (should match)
+  opens=$(grep -c '^

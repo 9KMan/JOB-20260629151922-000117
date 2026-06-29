@@ -1,5 +1,1 @@
-$ grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
-**Status:** Complete
-| 1 | docs/PROJECT_OVERVIEW.md | Full scope, success criteria, architecture, risks, phase map |
-| 2 | docs/GLOSSARY.md | Shared vocabulary for downstream phases |
-| 3 | README.md | Top-level entry point for operators and developers |
+$ grep -cE "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

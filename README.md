@@ -35,8 +35,7 @@ _See SPEC.md for the full tech stack and rationale._
 
 ## Architecture
 
-<details>
-<summary><strong>🏗 Architecture — ETL / Scraping pipeline</strong> (click to expand)</summary>
+### 🏗 Architecture — ETL / Scraping pipeline
 
 <div align="center">
 
@@ -44,10 +43,9 @@ _See SPEC.md for the full tech stack and rationale._
 
 </div>
 
-_Diagram is stack-adaptive — derived from the actual tech stack of this job. View [SPEC.md](./SPEC.md) for the full design._
+_Diagram is stack-adaptive — derived from the actual tech stack of this job._
 
 _Repo: <https://github.com/9KMan/JOB-20260629151922-000117>_
-</details>
 
 
 ---

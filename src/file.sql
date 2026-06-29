@@ -1,7 +1,7 @@
-id              SERIAL PK
-target_id       INT FK
-started_at      TIMESTAMPTZ
-finished_at     TIMESTAMPTZ
-status          TEXT        -- 'success' | 'failed' | 'partial'
-records_count   INT
-error_message   TEXT
+INSERT INTO scraper_targets (name, url, selector_map, schedule)
+VALUES (
+  'example_directory',
+  'https://example.com/listings',
+  '{"row": ".item", "name": "h2", "phone": ".tel"}'::jsonb,
+  '0 9 * * *'
+);

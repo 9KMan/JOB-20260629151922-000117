@@ -1,1 +1,1 @@
-ls -la pyproject.toml requirements.txt requirements-dev.txt alembic.ini alembic/env.py alembic/script.py.mako src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py
+echo "=== File syntax sanity (markdown lint via head) ===" && for f in docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md README.md; do echo "--- $f ---"; head -n 5 "$f"; echo; done

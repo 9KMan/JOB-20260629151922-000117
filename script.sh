@@ -1,2 +1,2 @@
-ls -la docs/
-wc -l docs/*.md
+docker compose up -d
+docker compose exec api alembic upgrade head

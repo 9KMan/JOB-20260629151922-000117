@@ -11,16 +11,16 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from bpa.config import get_settings
 
+
 config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# Inject DSN from application settings (single source of truth).
 settings = get_settings()
 config.set_main_option("sqlalchemy.url", str(settings.database_url))
 
-target_metadata = None  # Will be wired up in a later phase when models exist.
+target_metadata = None
 
 
 def run_migrations_offline() -> None:
@@ -44,8 +44,8 @@ def do_run_migrations(connection: Connection) -> None:
         context.run_migrations()
 
 
-async def run_migrations_online() -> None:
-    """Run migrations in 'online' mode using an async engine."""
+async def run_async_migrations() -> None:
+    """Run migrations in 'online' mode with async engine."""
     connectable = async_engine_from_config(
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
@@ -58,7 +58,12 @@ async def run_migrations_online() -> None:
     await connectable.dispose()
 
 
+def run_migrations_online() -> None:
+    """Run migrations in 'online' mode."""
+    asyncio.run(run_async_migrations())
+
+
 if context.is_offline_mode():
     run_migrations_offline()
 else:
-    asyncio.run(run_migrations_online())
+    run_migrations_online()

@@ -2,18 +2,24 @@ FROM mcr.microsoft.com/playwright/python:v1.49.1-jammy
 
 WORKDIR /app
 
-# Install Python deps first for better layer caching
+# System deps (already include most Playwright prerequisites in base image)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application
+# Ensure user-installed binaries are on PATH
+ENV PATH="/app:${PATH}"
+
 COPY . .
 
-# Make the `bpa` package importable and put project tools on PATH
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PATH="/app:${PATH}" \
-    PYTHONPATH="/app/src:${PYTHONPATH}"
+# Create non-root user for runtime
+RUN useradd --create-home --shell /bin/bash bpa \
+    && chown -R bpa:bpa /app
+USER bpa
 
 EXPOSE 8000
 

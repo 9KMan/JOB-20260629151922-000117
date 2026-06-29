@@ -3,43 +3,39 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.egg-info/
-.eggs/
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-.coverage.*
-coverage.xml
-
-# Virtual environments
 .venv/
 venv/
 env/
-ENV/
-
-# Distribution / build
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.tox/
+.nox/
 dist/
 build/
 *.egg
 
-# Environments
+# Environments / secrets
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 
-# IDE / editor
+# IDE
 .idea/
 .vscode/
 *.swp
 *.swo
 .DS_Store
 
-# Project-specific
+# Project
 .playwright/
-.playwright-mcp/
-*.log
-logs/
+test-results/
+playwright-report/
+playwright/.cache/
+exports/
+downloads/
 
 # Worker-internal files — NEVER push to GitHub
 PROPOSAL.md

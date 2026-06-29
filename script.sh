@@ -1,6 +1,14 @@
-python3 -m py_compile src/bpa/__init__.py && echo "OK: src/bpa/__init__.py"
-python3 -m py_compile src/bpa/config.py && echo "OK: src/bpa/config.py"
-python3 -m py_compile src/bpa/db.py && echo "OK: src/bpa/db.py"
-python3 -m py_compile src/bpa/logging_setup.py && echo "OK: src/bpa/logging_setup.py"
-python3 -m py_compile src/bpa/main.py && echo "OK: src/bpa/main.py"
-python3 -m py_compile alembic/env.py && echo "OK: alembic/env.py"
+echo "=== File listing ==="
+ls -la docs/ README.md
+echo ""
+echo "=== Verification grep: Phase 1 Complete + 3 doc paths ==="
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+echo ""
+echo "=== Match count (must be ≥ 4) ==="
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md | wc -l
+echo ""
+echo "=== Per-file line counts ==="
+wc -l docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md README.md docs/PHASE_LOG.md
+echo ""
+echo "=== Markdown structure sanity (no Python files were created) ==="
+file docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md README.md docs/PHASE_LOG.md

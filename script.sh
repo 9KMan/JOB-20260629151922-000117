@@ -1,1 +1,12 @@
-ls -la pyproject.toml requirements.txt requirements-dev.txt alembic.ini docker-compose.yml .gitignore .python-version README.md .env.example docker/Dockerfile src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py alembic/env.py alembic/script.py.mako
+# 1. Install dependencies
+pip install -r requirements-dev.txt
+
+# 2. Configure environment
+cp .env.example .env  # then edit values
+export DATABASE_URL=postgresql+asyncpg://bpa:bpa@localhost:5432/bpa
+
+# 3. Run database migrations
+alembic upgrade head
+
+# 4. Start the API + scheduler
+uvicorn bpa.main:app --reload

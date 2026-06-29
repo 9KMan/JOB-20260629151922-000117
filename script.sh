@@ -1,3 +1,2 @@
-ls -la
-ls -la src/bpa/
-ls -la alembic/
+alembic revision --autogenerate -m "msg"
+alembic upgrade head

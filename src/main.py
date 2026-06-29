@@ -5,21 +5,22 @@ import asyncio
 from logging.config import fileConfig
 
 from alembic import context
-from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from bpa.config import get_settings
 
+# Alembic Config object
 config = context.config
 
+# Override sqlalchemy.url from our settings (single source of truth)
+config.set_main_option("sqlalchemy.url", str(get_settings().database_url))
+
+# Configure stdlib logging from alembic.ini
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# Override sqlalchemy.url from app settings (single source of truth)
-settings = get_settings()
-config.set_main_option("sqlalchemy.url", str(settings.database_url))
-
+# No metadata yet - tables are defined in later phases.
 target_metadata = None
 
 
@@ -45,11 +46,10 @@ def do_run_migrations(connection: Connection) -> None:
 
 
 async def run_migrations_online() -> None:
-    """Run migrations in 'online' mode with async engine."""
+    """Run migrations in 'online' mode using async engine."""
     connectable = async_engine_from_config(
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
     )
 
     async with connectable.connect() as connection:

@@ -11,20 +11,18 @@ services:
       - bpa_pgdata:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U bpa -d bpa"]
-      interval: 10s
+      interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
 
   app:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
+    build: .
     depends_on:
       postgres:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql+asyncpg://bpa:bpa@postgres:5432/bpa
-      ENVIRONMENT: development
+      ENVIRONMENT: production
       LOG_LEVEL: INFO
     ports:
       - "8000:8000"

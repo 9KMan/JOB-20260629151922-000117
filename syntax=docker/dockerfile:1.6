@@ -1,0 +1,29 @@
+# syntax=docker/dockerfile:1.6
+# Uses Microsoft's Playwright image so Chromium runtime deps are pre-installed.
+FROM mcr.microsoft.com/playwright/python:v1.49.1-jammy
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /app
+
+# Install Python deps first for better layer caching.
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application source.
+COPY pyproject.toml ./
+COPY src ./src
+COPY alembic ./alembic
+COPY alembic.ini ./
+
+# Make the project importable when running scripts (uvicorn, alembic, CLI).
+ENV PYTHONPATH=/app \
+    PATH="/app:${PATH}"
+
+EXPOSE 8000
+
+# Default command runs the FastAPI app; override per-service in compose.
+CMD ["uvicorn", "bpa.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,3 +1,4 @@
+cat > pyproject.toml << 'TOMLEOF'
 [project]
 name = "bpa-pipeline"
 version = "0.1.0"
@@ -84,3 +85,4 @@ plugins = ["pydantic.mypy"]
 init_forbid_extra = true
 init_typed = true
 warn_required_dynamic_aliases = true
+TOMLEOF

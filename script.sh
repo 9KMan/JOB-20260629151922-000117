@@ -1,1 +1,1 @@
-ls -la PLAN-*.md 2>/dev/null; ls -la *.md 2>/dev/null
+python3 -m py_compile src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py alembic/env.py tests/__init__.py 2>&1

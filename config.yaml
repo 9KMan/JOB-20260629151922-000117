@@ -1,9 +1,40 @@
-targets:
-  - name: example-directory
-    url: https://example.com/listings
-    selector_map:
-      row: ".listing"
-      name: "h2.title"
-      phone: "a.tel"
-    schedule: "0 9 * * *"
-    enabled: true
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: bpa_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bpa
+      POSTGRES_PASSWORD: bpa
+      POSTGRES_DB: bpa
+    ports:
+      - "5432:5432"
+    volumes:
+      - bpa_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bpa -d bpa"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bpa_api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://bpa:bpa@postgres:5432/bpa
+      ENVIRONMENT: production
+      LOG_LEVEL: INFO
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    command: ["uvicorn", "bpa.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+volumes:
+  bpa_pgdata:

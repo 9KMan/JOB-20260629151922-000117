@@ -1,2 +1,1 @@
-echo "=== Files created ===" && \
-ls -la pyproject.toml src/bpa/ alembic/ alembic.ini Dockerfile docker-compose.yml requirements.txt requirements-dev.txt .gitignore .python-version .env.example 2>&1
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md | head -20

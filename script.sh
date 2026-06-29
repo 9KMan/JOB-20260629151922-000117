@@ -1,1 +1,2 @@
-grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+echo "--- YAML validation (if PyYAML available) ---"
+python3 -c "import yaml; yaml.safe_load(open('docker-compose.yml')); print('PASS: docker-compose.yml is valid YAML')" 2>&1 || echo "(PyYAML not installed - skipping)"

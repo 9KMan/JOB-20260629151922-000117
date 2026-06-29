@@ -1,41 +1,10 @@
-services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: bpa_postgres
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: bpa
-      POSTGRES_PASSWORD: bpa
-      POSTGRES_DB: bpa
-    volumes:
-      - bpa_pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U bpa -d bpa"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  app:
-    build: .
-    container_name: bpa_app
-    restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      DATABASE_URL: postgresql+asyncpg://bpa:bpa@postgres:5432/bpa
-      ENVIRONMENT: production
-      LOG_LEVEL: INFO
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/app
-    command: >
-      sh -c "alembic upgrade head &&
-             uvicorn bpa.main:app --host 0.0.0.0 --port 8000"
-
-volumes:
-  bpa_pgdata:
-    driver: local
+targets:
+  - name: example_directory
+    url: https://example.com/listings
+    selector_map:
+      row: ".listing"
+      name: "h2.title"
+      phone: ".contact .tel"
+      email: ".contact .email"
+    schedule: "0 9 * * *"   # daily at 09:00 UTC
+    enabled: true

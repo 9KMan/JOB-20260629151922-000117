@@ -1,1 +1,1 @@
-ls -la
+ls -la src/bpa/ alembic/

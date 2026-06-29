@@ -1,1 +1,1 @@
-mkdir -p docs && ls -la
+mkdir -p src/bpa alembic tests

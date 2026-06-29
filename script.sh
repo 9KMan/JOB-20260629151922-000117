@@ -1,1 +1,1 @@
-mkdir -p docs && echo "Directory ready"
+mkdir -p src/bpa alembic

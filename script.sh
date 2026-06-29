@@ -1,1 +1,10 @@
-python3 -m py_compile src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py alembic/env.py tests/__init__.py 2>&1
+echo "--- Verifying file presence ---"
+ls -la README.md docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md
+echo
+echo "--- Verifying grep contract (expect >=4 matches) ---"
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md | wc -l
+echo
+echo "--- Syntax checks (Python) ---"
+# No Python files in Phase 1, so confirm directory state and document it.
+find . -maxdepth 3 -name "*.py" | wc -l
+]<]minimax[>[

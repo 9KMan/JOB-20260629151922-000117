@@ -1,0 +1,8 @@
+
+1. `docs/PROJECT_OVERVIEW.md`
+2. `docs/GLOSSARY.md`
+3. `README.md`
+4. `docs/PHASE_LOG.md`
+
+Let me start by setting up the directory and creating each file. I'll note that the PHASE_LOG.md must contain enough matches for the grep verification.
+

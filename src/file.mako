@@ -9,8 +9,8 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
-import sqlalchemy as sa
 from alembic import op
+import sqlalchemy as sa
 ${imports if imports else ""}
 
 # revision identifiers, used by Alembic.
@@ -21,10 +21,8 @@ depends_on: str | Sequence[str] | None = ${repr(depends_on)}
 
 
 def upgrade() -> None:
-    """Upgrade schema."""
     ${upgrades if upgrades else "pass"}
 
 
 def downgrade() -> None:
-    """Downgrade schema."""
     ${downgrades if downgrades else "pass"}

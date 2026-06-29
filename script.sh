@@ -1,3 +1,1 @@
-for f in src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py alembic/env.py; do
-  python3 -m py_compile "$f" && echo "OK: $f" || echo "FAIL: $f"
-done
+cd /home/user && ls -la && echo "---" && find . -type f \( -name "*.py" -o -name "*.toml" -o -name "*.txt" -o -name "*.ini" -o -name "*.mako" -o -name ".gitignore" -o -name ".python-version" -o -name "README.md" \) | sort

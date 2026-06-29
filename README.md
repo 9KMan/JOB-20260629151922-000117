@@ -1,16 +1,16 @@
-# Business Process Automation — Web Scraping + Data Pipeline (MVP)
+# BPA Pipeline
 
-Automated ETL pipeline that scrapes business data from 2–3 target sites,
-cleans it into typed records, stores it in PostgreSQL, and delivers results
-via CSV, Google Sheets, and Telegram on a cron schedule.
+Business Process Automation — Web Scraping + Data Pipeline (MVP).
 
-> See `docs/PROJECT_OVERVIEW.md` for full scope, architecture, and phase map.
-> See `docs/GLOSSARY.md` for shared vocabulary.
+Scrapes business data from configurable target sites, normalizes records with Pydantic, stores them in PostgreSQL with idempotent upserts, and delivers results as CSV (and optionally Google Sheets + Telegram notifications).
 
 ## Stack
 
-Python 3.12 · Playwright · FastAPI · PostgreSQL · APScheduler · Telegram Bot API · Docker
+- Python 3.12 + Playwright + FastAPI
+- PostgreSQL 15 + SQLAlchemy 2 (async)
+- APScheduler (in-process cron)
+- python-telegram-bot + gspread
+- Docker / docker-compose
 
-## Status
+## Quick Start
 
-Phase 1 — Foundation (documentation baseline).

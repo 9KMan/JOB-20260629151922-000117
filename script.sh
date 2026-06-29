@@ -1,1 +1,2 @@
-$ grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+echo "=== File structure ==="
+find . -maxdepth 2 -type f \( -name "*.md" -o -name "*.py" -o -name "*.yml" -o -name "*.yaml" \) | sort

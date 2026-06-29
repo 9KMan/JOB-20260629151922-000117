@@ -1,1 +1,6 @@
-grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+python3 -c "import tomllib; tomllib.load(open('pyproject.toml','rb')); print('pyproject.toml: VALID TOML')"
+test -f requirements.txt && echo "requirements.txt: PRESENT ($(wc -l < requirements.txt) lines)"
+test -f requirements-dev.txt && echo "requirements-dev.txt: PRESENT"
+test -f alembic.ini && echo "alembic.ini: PRESENT"
+test -f alembic/script.py.mako && echo "alembic/script.py.mako: PRESENT"
+test -f .python-version && echo ".python-version: PRESENT ($(cat .python-version))"

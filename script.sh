@@ -1,8 +1,4 @@
-# 1. Boot the stack (PostgreSQL + pipeline service)
-docker compose up -d
-
-# 2. Verify health
-curl -fsS http://localhost:8000/health
-
-# 3. Trigger a manual run for one target
-docker compose exec pipeline python -m pipeline.cli run --target default
+echo "=== Syntax Check Results ==="
+for f in src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py alembic/env.py; do
+  python3 -m py_compile "$f" && echo "✓ PASS: $f" || echo "✗ FAIL: $f"
+done

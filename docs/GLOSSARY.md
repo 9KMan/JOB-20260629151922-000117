@@ -8,18 +8,16 @@
 | **Job** | A scheduled unit of work (one scrape window, one delivery task) |
 | **Operator** | The human who monitors the pipeline and acts on Telegram alerts |
 | **Poison message** | A record that fails validation repeatedly and is routed to DLQ |
-| **Selector** | A Playwright/CSS/XPath locator pointing at an element on the target page |
-| **Target site** | A configured source website (one row in `scraper_targets`) |
-| **Window** | The time span of records a single scrape run is expected to capture |
-| **Backoff** | Increasing delay between retry attempts (exponential schedule) |
-| **Upsert** | INSERT … ON CONFLICT DO UPDATE; used to enforce idempotency on `(target_id, external_id)` |
-| **Jobstore** | APScheduler persistence backend — here, a SQLAlchemy jobstore bound to PostgreSQL |
-| **CronTrigger** | APScheduler trigger type driven by cron expressions |
-| **Service Account** | Google Cloud IAM identity used by gspread to authenticate against Sheets API |
-| **Bot Token** | Opaque secret issued by `@BotFather` authorizing calls to the Telegram Bot API |
-| **Adapter** | Pluggable class that turns a raw page into normalized records (Playwright or httpx flavors) |
-| **Record** | A single normalized business entry (Pydantic model) ready for storage |
-| **Run** | One execution of a Job, recorded in the `runs` table for audit |
-| **Healthcheck** | Liveness probe endpoint (`/healthz`) used by Docker / orchestrator |
-| **Stack trace** | Captured exception text attached to a DLQ row for post-mortem |
-| **Trace** | Playwright trace file written when a scrape fails for debugging |
+| **Selector** | A Playwright/CSS/XPath locator pointing at an element on the source page |
+| **Source site** | An upstream website whose data we extract |
+| **Target** | A registered source site, with schedule and selector map, stored in `scraper_targets` |
+| **Run** | A single execution instance of a job, recorded in the `runs` table |
+| **Cron trigger** | APScheduler primitive that fires jobs on calendar-based schedules |
+| **Backoff** | Increasing delay between retry attempts (e.g. 1s → 2s → 4s) |
+| **Record** | A normalized, Pydantic-validated row ready for persistence or delivery |
+| **Payload** | The JSON-serialized form of a `Record` as stored in PostgreSQL |
+| **External ID** | Source-provided unique identifier used as the dedup key |
+| **Delivery channel** | One of: CSV file, Google Sheet, Telegram message |
+| **Healthcheck** | `GET /healthz` endpoint confirming process liveness + DB reachability |
+| **Jobstore** | APScheduler persistence layer (here: SQLAlchemy-backed on same PG) |
+| **Trace** | Playwright network + DOM trace captured on selector failure for debugging |

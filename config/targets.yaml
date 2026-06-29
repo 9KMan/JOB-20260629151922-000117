@@ -1,12 +1,40 @@
-# config/targets.yaml
+# Sample target site configurations.
+#
+# Adding a new target is a single-row change:
+#   - name:  unique identifier
+#   - url:   starting URL
+#   - mode:  "http" (default) or "playwright"
+#   - selector_map.row: CSS selector matching each record container
+#   - selector_map.fields: dict of {semantic_name: css_selector}
+#   - schedule: standard 5-field cron expression
+#
+# These rows are loaded by the orchestrator at boot and turned into DB
+# rows on first run; subsequent runs read from the DB so operators can
+# toggle `enabled` / `schedule` without redeploying.
 targets:
-  - name: example_directory
+  - name: example_directory_a
     url: https://example.com/listings
-    engine: playwright   # or "httpx"
+    mode: http
     schedule: "0 9 * * *"
     enabled: true
     selector_map:
-      row: "div.listing"
+      row: ".listing"
       fields:
         name: "h2.title"
-        phone: "a.tel"
+        phone: ".phone"
+        email: ".email"
+        address: ".address"
+        website: "a.website"
+        category: ".category"
+  - name: example_directory_b
+    url: https://example.org/businesses
+    mode: http
+    schedule: "30 9 * * *"
+    enabled: true
+    selector_map:
+      row: "article.business"
+      fields:
+        name: "h3.name"
+        phone: "span.tel"
+        address: "p.address"
+        category: ".tag"

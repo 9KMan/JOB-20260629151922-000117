@@ -1,1 +1,5 @@
-grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\\.md|docs/GLOSSARY\\.md|README\\.md" docs/PHASE_LOG.md
+echo "=== Verifying only allowed files at top level ==="
+ls -la
+echo ""
+echo "=== Final docs directory ==="
+ls -la docs/

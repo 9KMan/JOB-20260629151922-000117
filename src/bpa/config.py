@@ -1,3 +1,0 @@
-- env_file=PROJECT_ROOT / ".env",
-- default="postgresql+asyncpg://bpa:bpa@localhost:5432/bpa"
-- 

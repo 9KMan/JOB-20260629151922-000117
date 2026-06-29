@@ -1,1 +1,1 @@
-find . -type f \( -name "*.py" -o -name "*.toml" -o -name "*.txt" -o -name "*.ini" -o -name "*.mako" -o -name "Dockerfile" -o -name "docker-compose.yml" -o -name ".gitignore" -o -name ".python-version" -o -name ".env.example" -o -name "README.md" \) | sort
+wc -l docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md README.md docs/PHASE_LOG.md

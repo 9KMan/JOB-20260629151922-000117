@@ -1,1 +1,1 @@
-grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+ls -la pyproject.toml src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py requirements.txt requirements-dev.txt alembic.ini alembic/env.py alembic/script.py.mako Dockerfile docker-compose.yml .env.example .gitignore README.md

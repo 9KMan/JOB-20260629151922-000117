@@ -1,1 +1,4 @@
-grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+ls -la src/bpa/ alembic/
+cat pyproject.toml | head -5
+cat requirements.txt | head -3
+cat .gitignore | head -10

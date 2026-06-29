@@ -1,2 +1,4 @@
-  grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
-  
+ruff check .            # lint
+ruff format .           # format
+mypy src                # static type-check
+pytest                  # tests with coverage

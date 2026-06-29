@@ -1,4 +1,3 @@
-mkdir -p src/bpa alembic
 python3 -m py_compile src/bpa/__init__.py && echo "OK: src/bpa/__init__.py"
 python3 -m py_compile src/bpa/config.py && echo "OK: src/bpa/config.py"
 python3 -m py_compile src/bpa/db.py && echo "OK: src/bpa/db.py"

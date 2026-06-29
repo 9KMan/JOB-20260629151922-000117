@@ -1,16 +1,18 @@
 # BPA Pipeline
 
-Business Process Automation - Web Scraping + Data Pipeline (MVP).
+Business Process Automation — Web Scraping + Data Pipeline (MVP).
 
 ## Stack
 
 - Python 3.12
-- Playwright + httpx
 - FastAPI + Uvicorn
-- PostgreSQL + SQLAlchemy (async)
+- PostgreSQL 15 (async SQLAlchemy + asyncpg)
+- Playwright
 - APScheduler
 - python-telegram-bot
-- gspread
+- gspread (Google Sheets)
+- Alembic (migrations)
+- structlog (logging)
 
-## Layout
+## Quickstart
 

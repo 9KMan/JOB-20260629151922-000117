@@ -1,6 +1,7 @@
 services:
   postgres:
     image: postgres:15-alpine
+    container_name: bpa_postgres
     environment:
       POSTGRES_USER: bpa
       POSTGRES_PASSWORD: bpa
@@ -10,18 +11,23 @@ services:
     volumes:
       - bpa_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U bpa"]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -U bpa -d bpa"]
+      interval: 10s
       timeout: 5s
       retries: 5
 
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bpa_app
     depends_on:
       postgres:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql+asyncpg://bpa:bpa@postgres:5432/bpa
+    env_file:
+      - .env
     ports:
       - "8000:8000"
     volumes:

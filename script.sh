@@ -1,10 +1,3 @@
-echo "--- Verifying file presence ---"
-ls -la README.md docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md
-echo
-echo "--- Verifying grep contract (expect >=4 matches) ---"
-grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md | wc -l
-echo
-echo "--- Syntax checks (Python) ---"
-# No Python files in Phase 1, so confirm directory state and document it.
-find . -maxdepth 3 -name "*.py" | wc -l
-]<]minimax[>[
+python3 -c "import tomllib; tomllib.loads(open('pyproject.toml').read()); print('OK: pyproject.toml')"
+python3 -c "import configparser; c=configparser.ConfigParser(); c.read('alembic.ini'); print('OK: alembic.ini')"
+python3 -c "import yaml; yaml.safe_load(open('docker-compose.yml')); print('OK: docker-compose.yml')"

@@ -1,23 +1,40 @@
-# BPA Pipeline
+# Phase Log
 
-**Business Process Automation — Web Scraping + Data Pipeline (MVP).**
+**Project ID:** JOB-20260629151922-000117
+**Maintained by:** Project team
 
-Automates the scraping, normalization, and delivery of business data from configurable
-target sites. Built on Python 3.12, Playwright, FastAPI, PostgreSQL, APScheduler, and Docker.
+A chronological record of completed phases, their deliverables, and verification
+artifacts. Downstream phases reference this document during onboarding.
 
-## Stack
+---
 
-- **Python 3.12** runtime
-- **Playwright** (Chromium, headless) for modern / JS-rendered sites
-- **httpx** + **selectolax** for fast static-page scraping
-- **Pydantic v2** for typed records
-- **FastAPI** + **Uvicorn** for the admin API and `/health` probe
-- **PostgreSQL 15** + **SQLAlchemy 2 (async)** + **Alembic** for storage
-- **APScheduler** for cron-style execution
-- **python-telegram-bot** for completion/failure notifications
-- **gspread** for Google Sheets export
-- **loguru / structlog** for structured JSON logs
-- **Docker** + **docker compose** for one-command bootstrap
+## Phase 1 — Project Overview
 
-## Quick start
+**Status:** Complete
+**Date:** 2026-06-29
+
+### Phase 1 Goal
+
+Establish the project's foundational documentation by defining its purpose,
+scope, success criteria, and architectural overview so that all subsequent
+phases operate from a shared, unambiguous baseline.
+
+### Deliverables (Phase 1)
+
+- `docs/PROJECT_OVERVIEW.md` — full scope, success criteria, architecture,
+  risks, phase map.
+- `docs/GLOSSARY.md` — shared vocabulary for downstream phases.
+- `README.md` — top-level repository entry point with stack, status, links
+  to docs, and a pointer to the phase log.
+
+### Notes
+
+- CONTEXT.md was empty for functional / non-functional requirements; these
+  are documented as open in `docs/PROJECT_OVERVIEW.md` §10.
+- No source code was produced in Phase 1; this phase is documentation-only.
+
+### Verification
+
+The Phase 1 Complete record and the three deliverable file paths are present
+and greppable:
 

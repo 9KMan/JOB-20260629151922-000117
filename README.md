@@ -1,9 +1,6 @@
 # Business Process Automation — Web Scraping + Data Pipeline (MVP)
 
-> > # SPEC: Business Process Automation — Web Scraping + Data Pipeline (MVP)
-
-**Job:** JOB-20260629151922-000117
-**Upwork:** https://www.
+> > Clean extract → normalize → load pipeline.
 
 **Built by: KMan | AI-Augmented Engineering Factory**
 
@@ -11,289 +8,59 @@
 
 ## Business Problem Solved
 
-# SPEC: Business Process Automation — Web Scraping + Data Pipeline (MVP)
-
-**Job:** JOB-20260629151922-000117
-**Upwork:** https://www.upwork.com/jobs/~022071567341570058217
-**Stack:** Python 3.12 + Playwright + FastAPI + PostgreSQL + APScheduler + Telegram Bot API + Docker
-**Architecture:** ETL pipeline with idempotent fetches, retry queues, dead-letter handling
-
----
-
-## 1. Business Problem Solved
-
-Manual copy-paste from 2-3 websites into spreadsheets is unreliable, slow, and unscalable. We replace it with an automated pipeline that:
-
-1. **Scrapes** business data from target sites using Playwright (modern Chromium-based, headless)
-2. **Cleans** the raw HTML into structured records (Pydantic-validated)
-3. **Stores** records in PostgreSQL for history and deduplication
-4. **Delivers** results as CSV exports + Google Sheets (via API) + Telegram summary
-5. **Runs automatically** on cron schedule with retry/DLQ safety nets
-
-Goal: a clean MVP that the operator can extend later — no over-engineering, no Kubernetes, no microservices.
-
----
-
-## 2. Functional Requirements
-
-| ID | Requirement | Priority |
-|----|-------------|----------|
-| FR-1 | Scrape 2-3 configurable target sites via Playwright | Must |
-| FR-2 | Parse raw HTML into normalized Pydantic records | Must |
-| FR-3 | Store records in PostgreSQL with upsert dedup | Must |
-| FR-4 | Export to CSV (one-click download) | Must |
-| FR-5 | Export to Google Sheets (auto-update) | Should |
-| FR-6 | Cron-scheduled pipeline (default: daily 09:00 UTC) | Must |
-| FR-7 | Retry on transient failures (3x exponential backoff) | Must |
-| FR-8 | Dead-letter queue for permanent failures + alert | Must |
-| FR-9 | Optional Telegram bot: ping on completion/failure | Should |
-| FR-10 | Configuration via YAML (no code change for new sites) | Must |
-| FR-11 | Health-check endpoint `/health` | Must |
-| FR-12 | Operator CLI for manual runs (`python -m pipeline.cli`) | Should |
-
----
-
-## 3. Non-Functional Requirements
-
-- **Reliability:** 99% run success rate over 30 days; permanent failure alerts within 5 min
-- **Idempotency:** Re-running a scrape produces the same result set (no duplicates)
-- **Observability:** Structured JSON logs (loguru), run history table, last-24h dashboard
-- **Security:** Credentials in env vars (never in code), CSRF on admin endpoints, Telegram bot token in env
-- **Maintainability:** Add a new target site via YAML config + one selector map (no Python edits)
-- **Performance:** Scrape 1000 records from a typical directory site in <10 min
-
----
-
-## 4. Constraints
-
-- **MVP scope:** Clean, extensible. Not heavy system design. Not scaling-ready (single-host deployment).
-- **Stack:** Selenium OR Playwright (we prefer Playwright — faster, less flaky).
-- **Delivery format:** CSV (mandatory) + Google Sheets (optional) + Telegram summary (optional).
-- **Backend experience:** "useful" — implies Python-leaning, not just frontend.
-- **Storage:** PostgreSQL is optional ("for storage or logging setup"). If used → `fastapi-postgres-crud` base template.
-
----
-
-## 5. Technical Stack
-
-| Layer | Choice | Why |
-|-------|--------|-----|
-| Scraper | Playwright (Python sync API) | Faster + more reliable than Selenium for modern SPAs |
-| HTTP fallback | httpx + selectolax | Pure-server-rendered sites don't need a browser |
-| Validation | Pydantic v2 | Type-safe records, JSON Schema export for Sheets |
-| API | FastAPI + Uvicorn | Admin endpoints + `/health` + CSV export |
-| DB | PostgreSQL 15 + SQLAlchemy | Persistent history, idempotent upserts |
-| Scheduler | APScheduler (in-process) | Simpler than Celery for single-host MVP |
-| Bot | python-telegram-bot (v20) | Async-native, well-maintained |
-| Sheets | gspread + service account | Standard library, OAuth service-account flow |
-| Packaging | uv + Dockerfile | Reproducible builds, one-command boot |
-| Testing | pytest + pytest-asyncio | Standard for async FastAPI work |
-| Logs | loguru | JSON-formatted, file rotation, Telegram hook |
-
----
-
-## 6. Architecture
-
-```
-┌──────────────┐
-│  Schedule    │  APScheduler (cron "0 9 * * *")
-│  (daily 09u) │
-└──────┬───────┘
-       │ trigger
-       ▼
-┌──────────────┐    ┌─────────────────┐
-│  Pipeline    │───▶│  Playwright      │  (or httpx for static sites)
-│  Orchestrator│    │  Scraper Worker  │
-└──────┬───────┘    └────────┬────────┘
-       │                     │
-       │                     ▼
-       │            ┌─────────────────┐
-       │            │ Pydantic Parser │
-       │            │ + Normalizer    │
-       │            └────────┬────────┘
-       │                     │
-       │                     ▼
-       │            ┌─────────────────┐
-       │            │ PostgreSQL     │  (record store + idempotent upsert)
-       │            │ (records table)│
-       │            └────────┬────────┘
-       │                     │
-       ├─────────────────────┤
-       │                     │
-       ▼                     ▼
-┌──────────────┐    ┌─────────────────┐
-│  Failure     │    │  Output         │
-│  → DLQ       │    │  • CSV export   │
-│  → Telegram  │    │  • Google Sheets│
-└──────────────┘    │  • CLI download │
-                    └─────────────────┘
-```
-
----
-
-## 7. Data Model
-
-### `scraper_targets` (config table)
-```sql
-id            SERIAL PK
-name          TEXT UNIQUE
-url           TEXT
-selector_map  JSONB       -- {"row": ".item", "name": "h2", "phone": ".tel"}
-schedule      TEXT        -- cron expression (default: "0 9 * * *")
-enabled       BOOLEAN DEFAULT true
-created_at    TIMESTAMPTZ
-```
-
-### `records` (scraped data)
-```sql
-id              BIGSERIAL PK
-target_id       INT FK -> scraper_targets
-external_id     TEXT             -- dedup key from source
-payload         JSONB            -- normalized record
-source_url      TEXT             -- verify-link back to source
-scraped_at      TIMESTAMPTZ
-UNIQUE(target_id, external_id)   -- idempotency
-```
-
-### `runs` (execution history)
-```sql
-id              SERIAL PK
-target_id       INT FK
-started_at      TIMESTAMPTZ
-finished_at     TIMESTAMPTZ
-status          TEXT            -- 'success'|'partial'|'failed'
-records_new     INT
-records_updated INT
-error_message   TEXT
-```
-
----
-
-## 8. Directory Structure
-
-```
-scrape-pipeline/
-├── README.md
-├── pyproject.toml
-├── Dockerfile
-├── docker-compose.yml
-├── .env.example
-├── pipeline/
-│   ├── __init__.py
-│   ├── cli.py              # `python -m pipeline.cli run --target acme`
-│   ├── orchestrator.py     # APScheduler + run orchestration
-│   ├── scrapers/
-│   │   ├── base.py         # PlaywrightScraper abstract
-│   │   ├── playwright.py   # browser-based scraper
-│   │   └── http.py         # httpx + selectolax fallback
-│   ├── parsers/
-│   │   ├── normalize.py    # text/coerce helpers
-│   │   └── validate.py     # Pydantic schemas per target
-│   ├── db/
-│   │   ├── models.py
-│   │   ├── schema.sql
-│   │   └── upsert.py       # idempotent insert
-│   ├── schedulers/
-│   │   └── cron.py         # APScheduler config
-│   ├── outputs/
-│   │   ├── csv_export.py
-│   │   ├── sheets.py       # Google Sheets via gspread
-│   │   └── telegram.py     # bot notifier
-│   ├── retry.py            # tenacity-backed retry
-│   └── dlq.py              # dead-letter queue
-├── config/
-│   └── targets.yaml        # editable site configs
-├── tests/
-│   ├── test_parsers.py
-│   ├── test_upsert.py
-│   ├── test_retry.py
-│   └── fixtures/
-└── docs/
-    ├── architecture.md
-    ├── adding-a-target.md
-    └── deployment.md
-```
-
----
-
-## 9. Acceptance Criteria
-
-- [ ] `docker-compose up` boots API + Postgres + scheduler in <30s
-- [ ] Two target sites configured in `config/targets.yaml`
-- [ ] Manual scrape via `python -m pipeline.cli run --target <name>` produces CSV
-- [ ] Auto-scrape on cron produces CSV + updates Sheets + sends Telegram summary
-- [ ] Scraping a duplicate record updates the existing row, not insert (verify in DB)
-- [ ] Transient failure (network timeout) retries 3x with backoff
-- [ ] Permanent failure routes to DLQ table + Telegram alert
-- [ ] Adding a third target requires only YAML config + one selector map (no Python edits)
-- [ ] All tests pass (`pytest -q`): ≥ 20 tests
-- [ ] README documents: Quick Start, Architecture diagram, How to add a target, Deployment
-
----
-
-## 10. Out of Scope
-
-- Horizontal scaling (single-host MVP)
-- Kubernetes / helm charts
-- Multi-tenant isolation
-- Distributed task queue (Celery/Redis) — APScheduler in-process is fine for this scale
-- Per-site proxy rotation (assume sites are friendly; add later if needed)
-- CAPTCHA solving
-- Web UI dashboard — we use Telegram summaries + DB queries for status
-
----
-
-## 11. Deployment
-
-- **Local dev:** `uv run python -m pipeline.cli run --target acme`
-- **Production:** `docker-compose up -d` on a single VPS
-- **Logs:** `loguru` JSON to stdout + `/var/log/scrape/`
-- **Health:** `GET http://host:8000/health` → 200 OK with `{"status": "ok", "last_run": "..."}`
-
----
-
-## 12. References
-
-- `references/scraper_target_template.md` — YAML schema for new targets
-- `references/troubleshooting_selenium_to_playwright.md` — common migration pitfalls
-- `references/google_sheets_service_account_setup.md` — OAuth flow
-- `references/telegram_bot_token_setup.md` — bot registration
-
+Clean extract → normalize → load pipeline. APScheduler cron-triggered. Playwright + httpx dual-mode scraping. Pydantic v2 schemas. PostgreSQL idempotent UPSERT. Outputs: CSV (mandatory), Google Sheets (optional via gspread), Telegram summary. YAML-configured targets — no Python edits to add a site. Built for extension, not for scale.
 
 ---
 
 ## Scope
 
-# SPEC: Business Process Automation — Web Scraping + Data Pipeline (MVP)
-
-**Job:** JOB-20260629151922-000117
-**Upwork:** https://www. upwork. com/jobs/~022071567341570058217
-**Stack:** Python 3.
+Clean extract → normalize → load pipeline. APScheduler cron-triggered. Playwright + httpx dual-mode scraping.
 
 ---
 
 ## 🏗 Technical Stack
 
-_Not specified — see SPEC.md for full tech stack._
+| **Languages & Runtimes** | Python |
+| **Languages & Runtimes** | Google Sheets |
+| **Tools & Libraries** | Playwright |
+| **Tools & Libraries** | APScheduler |
+| **Tools & Libraries** | Telegram Bot |
+| **Web Frameworks** | FastAPI |
+| **Databases** | PostgreSQL |
+| **Infrastructure** | Docker |
+
+_See SPEC.md for the full tech stack and rationale._
 
 ---
 
 ## Architecture
 
-<p align="center">
-  <img src="./diagrams/architecture.svg" alt="Architecture Diagram" width="900"/>
-</p>
+<details>
+<summary><strong>🏗 Architecture — ETL / Scraping pipeline</strong> (click to expand)</summary>
 
-_Local view: `xdg-open diagrams/architecture.svg`_
+<div align="center">
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" preserveAspectRatio="xMidYMid meet" style="max-width:100%;background:#020617;border:1px solid #1e293b;border-radius:8px;display:block;margin:0 auto"><defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/></pattern><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/></marker></defs><rect width="800" height="200" fill="url(#g)"/><rect x="40" y="30" width="130" height="50" rx="6" fill="#0f172a"/><rect x="40" y="30" width="130" height="50" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/><text x="105.0" y="53.0" fill="#e2e8f0" font-family="ui-monospace,SF Mono,monospace" font-size="12" font-weight="600" text-anchor="middle">Schedule</text><text x="105.0" y="67.0" fill="#94a3b8" font-family="ui-monospace,SF Mono,monospace" font-size="9" text-anchor="middle">APScheduler</text><rect x="220" y="30" width="160" height="50" rx="6" fill="#0f172a"/><rect x="220" y="30" width="160" height="50" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/><text x="300.0" y="53.0" fill="#e2e8f0" font-family="ui-monospace,SF Mono,monospace" font-size="12" font-weight="600" text-anchor="middle">Scraper</text><text x="300.0" y="67.0" fill="#94a3b8" font-family="ui-monospace,SF Mono,monospace" font-size="9" text-anchor="middle">Playwright / httpx</text><rect x="430" y="30" width="160" height="50" rx="6" fill="#0f172a"/><rect x="430" y="30" width="160" height="50" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/><text x="510.0" y="53.0" fill="#e2e8f0" font-family="ui-monospace,SF Mono,monospace" font-size="12" font-weight="600" text-anchor="middle">Parser</text><text x="510.0" y="67.0" fill="#94a3b8" font-family="ui-monospace,SF Mono,monospace" font-size="9" text-anchor="middle">Pydantic schemas</text><rect x="640" y="30" width="130" height="50" rx="6" fill="#0f172a"/><rect x="640" y="30" width="130" height="50" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/><text x="705.0" y="53.0" fill="#e2e8f0" font-family="ui-monospace,SF Mono,monospace" font-size="12" font-weight="600" text-anchor="middle">PostgreSQL</text><text x="705.0" y="67.0" fill="#94a3b8" font-family="ui-monospace,SF Mono,monospace" font-size="9" text-anchor="middle">idempotent UPSERT</text><line x1="170" y1="55" x2="220" y2="55" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/><line x1="380" y1="55" x2="430" y2="55" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/><line x1="590" y1="55" x2="640" y2="55" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/><rect x="220" y="130" width="100" height="50" rx="6" fill="#0f172a"/><rect x="220" y="130" width="100" height="50" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/><text x="270.0" y="153.0" fill="#e2e8f0" font-family="ui-monospace,SF Mono,monospace" font-size="12" font-weight="600" text-anchor="middle">CSV</text><text x="270.0" y="167.0" fill="#94a3b8" font-family="ui-monospace,SF Mono,monospace" font-size="9" text-anchor="middle">fastapi route</text><rect x="340" y="130" width="130" height="50" rx="6" fill="#0f172a"/><rect x="340" y="130" width="130" height="50" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/><text x="405.0" y="153.0" fill="#e2e8f0" font-family="ui-monospace,SF Mono,monospace" font-size="12" font-weight="600" text-anchor="middle">Google Sheets</text><text x="405.0" y="167.0" fill="#94a3b8" font-family="ui-monospace,SF Mono,monospace" font-size="9" text-anchor="middle">gspread</text><rect x="490" y="130" width="130" height="50" rx="6" fill="#0f172a"/><rect x="490" y="130" width="130" height="50" rx="6" fill="rgba(251, 146, 60, 0.3)" stroke="#fb923c" stroke-width="1.5"/><text x="555.0" y="153.0" fill="#e2e8f0" font-family="ui-monospace,SF Mono,monospace" font-size="12" font-weight="600" text-anchor="middle">Telegram</text><text x="555.0" y="167.0" fill="#94a3b8" font-family="ui-monospace,SF Mono,monospace" font-size="9" text-anchor="middle">python-telegram-bot</text><line x1="550" y1="80" x2="270" y2="130" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/><line x1="550" y1="80" x2="405" y2="130" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/><line x1="550" y1="80" x2="555" y2="130" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/><rect x="40" y="130" width="150" height="50" rx="6" fill="#0f172a"/><rect x="40" y="130" width="150" height="50" rx="6" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/><text x="115.0" y="153.0" fill="#e2e8f0" font-family="ui-monospace,SF Mono,monospace" font-size="12" font-weight="600" text-anchor="middle">Dead-letter Q</text><text x="115.0" y="167.0" fill="#94a3b8" font-family="ui-monospace,SF Mono,monospace" font-size="9" text-anchor="middle">failed records</text><rect x="660" y="130" width="120" height="50" rx="6" fill="#0f172a"/><rect x="660" y="130" width="120" height="50" rx="6" fill="rgba(251, 146, 60, 0.3)" stroke="#fb923c" stroke-width="1.5"/><text x="720.0" y="153.0" fill="#e2e8f0" font-family="ui-monospace,SF Mono,monospace" font-size="12" font-weight="600" text-anchor="middle">Alerts</text><text x="720.0" y="167.0" fill="#94a3b8" font-family="ui-monospace,SF Mono,monospace" font-size="9" text-anchor="middle">Telegram ping</text><line x1="380" y1="80" x2="115" y2="130" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/><line x1="660" y1="155" x2="640" y2="155" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/></svg>
+
+</div>
+
+_Diagram is stack-adaptive — derived from the actual tech stack of this job. View [SPEC.md](./SPEC.md) for the full design._
+
+_Repo: <https://github.com/9KMan/JOB-20260629151922-000117>_
+</details>
+
 
 ---
 
 ## ✅ Acceptance Criteria
 
-1. **Working application** — builds and runs without errors
-2. **Tests** — pytest with ≥5 passing tests
-3. **Docker** — `docker compose up --build` succeeds
-4. **README** — complete run instructions and feature documentation
+1. **API endpoint working end-to-end** — at minimum one data ingestion or query flow from request to database response
+2. **Database models** — schema defined with ≥3 entities, migrations ready
+3. **Authentication** — JWT or session auth on at least one protected endpoint
+4. **ETL pipeline** — at least one transformation from raw input to structured output
+5. **Tests** — pytest with ≥5 passing tests covering core functionality
+6. **Docker** — project builds and runs via `docker compose up --build`
+7. **README** — complete run instructions, architecture diagram, and feature list
 
 ---
 

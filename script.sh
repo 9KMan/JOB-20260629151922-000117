@@ -1,2 +1,1 @@
-echo "=== File summary ===" && \
-find . -type f \( -name "*.py" -o -name "*.toml" -o -name "*.ini" -o -name "*.txt" -o -name "*.md" -o -name "*.yml" -o -name "Dockerfile" -o -name ".env.example" -o -name ".gitignore" -o -name ".python-version" -o -name "*.mako" \) | grep -v __pycache__ | sort
+ls -la docs/ README.md && echo "---" && grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

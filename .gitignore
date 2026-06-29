@@ -1,45 +1,16 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.egg-info/
-.venv/
-venv/
-env/
-ENV/
-.mypy_cache/
-.ruff_cache/
-.pytest_cache/
-htmlcov/
-.coverage
-.coverage.*
-coverage.xml
-.tox/
-dist/
-build/
-*.egg
-
-# Env
-.env
-.env.local
-.env.*.local
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-.DS_Store
-
-# Playwright
-.playwright/
-test-results/
-playwright-report/
-
-# Logs
-*.log
-logs/
-
+- __pycache__/
+- *.egg-info/
+- .venv/
+- venv/
+- .env
+- .pytest_cache/
+- .mypy_cache/
+- .ruff_cache/
+- htmlcov/
+- dist/
+- build/
+- .playwright/
+- 
 # Worker-internal files — NEVER push to GitHub
 PROPOSAL.md
 COVER_LETTER.txt
@@ -48,3 +19,5 @@ TASK.txt
 pid
 role
 *.pyc
+__pycache__/
+.DS_Store

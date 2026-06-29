@@ -1,10 +1,6 @@
-echo "=== File listing ==="
-ls -la docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md README.md 2>&1
-
-echo ""
-echo "=== Verifying grep (must return >= 4 matches) ==="
-grep -cE "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
-
-echo ""
-echo "=== Lines returned ==="
-grep -nE "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+python3 -m py_compile src/bpa/__init__.py && echo "OK: src/bpa/__init__.py"
+python3 -m py_compile src/bpa/config.py && echo "OK: src/bpa/config.py"
+python3 -m py_compile src/bpa/db.py && echo "OK: src/bpa/db.py"
+python3 -m py_compile src/bpa/logging_setup.py && echo "OK: src/bpa/logging_setup.py"
+python3 -m py_compile src/bpa/main.py && echo "OK: src/bpa/main.py"
+python3 -m py_compile alembic/env.py && echo "OK: alembic/env.py"

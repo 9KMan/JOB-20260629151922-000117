@@ -1,1 +1,1 @@
-find . -type f -not -path './.*' | sort
+cd /home/user && pwd && ls -la

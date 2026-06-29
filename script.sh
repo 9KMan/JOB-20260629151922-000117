@@ -1,2 +1,1 @@
-mkdir -p docs
-echo "Directory created"
+mkdir -p src/bpa alembic

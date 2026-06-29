@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: bpa_postgres
+    environment:
+      POSTGRES_USER: bpa
+      POSTGRES_PASSWORD: bpa
+      POSTGRES_DB: bpa
+    ports:
+      - "5432:5432"
+    volumes:
+      - bpa_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bpa -d bpa"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bpa_api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://bpa:bpa@postgres:5432/bpa
+      ENVIRONMENT: development
+      LOG_LEVEL: INFO
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    command: ["uvicorn", "bpa.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bpa_scheduler
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://bpa:bpa@postgres:5432/bpa
+      ENVIRONMENT: development
+      LOG_LEVEL: INFO
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    command: ["python", "-m", "bpa.scheduler"]
+
+volumes:
+  bpa_pgdata:

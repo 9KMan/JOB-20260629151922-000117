@@ -1,0 +1,86 @@
+[project]
+name = "bpa-pipeline"
+version = "0.1.0"
+description = "Business Process Automation - Web Scraping + Data Pipeline (MVP)"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "MIT" }
+authors = [
+    { name = "BPA Team" },
+]
+keywords = ["scraping", "etl", "playwright", "fastapi", "postgresql"]
+
+dependencies = [
+    # Web framework + ASGI server
+    "fastapi==0.115.6",
+    "uvicorn[standard]==0.32.1",
+
+    # Data validation / domain models
+    "pydantic==2.10.3",
+    "pydantic-settings==2.7.0",
+
+    # Database (async stack)
+    "sqlalchemy[asyncio]==2.0.36",
+    "asyncpg==0.30.0",
+    "alembic==1.14.0",
+
+    # HTTP + scraping
+    "httpx==0.28.1",
+    "playwright==1.49.1",
+
+    # Scheduling
+    "apscheduler==3.10.4",
+
+    # Telegram
+    "python-telegram-bot==21.10",
+
+    # Google Sheets
+    "gspread==6.1.4",
+    "google-auth==2.37.0",
+
+    # Misc
+    "tenacity==9.0.0",
+    "structlog==24.4.0",
+    "python-dotenv==1.0.1",
+    "orjson==3.10.12",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.4",
+    "pytest-asyncio==0.25.0",
+    "pytest-cov==6.0.0",
+    "ruff==0.8.4",
+    "mypy==1.13.0",
+    "types-asyncpg==0.0.4",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bpa"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "ASYNC"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true

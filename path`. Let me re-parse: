@@ -1,0 +1,20 @@
+
+1. `pyproject.toml`
+2. `src/bpa/__init__.py`
+3. `src/bpa/config.py`
+4. `src/bpa/db.py`
+5. `src/bpa/logging_setup.py`
+6. `src/bpa/main.py`
+7. `requirements.txt`
+8. `requirements-dev.txt`
+9. `alembic.ini`
+10. `alembic/env.py`
+11. `alembic/script.py.mako`
+12. `docker-compose.yml`
+13. `.gitignore`
+14. `README.md` — system says skip, will skip per ROOT_SYSTEM_POLICY
+
+The Dockerfile hints appear to be part of the docker-compose.yml entry (or a Dockerfile that was collapsed). Since Dockerfile isn't a separate file in the list, I'll skip it. The `.python-version` file appears in the plan content but not in the file list header — I'll include it since it's clearly intended.
+
+Let me now write all files:
+

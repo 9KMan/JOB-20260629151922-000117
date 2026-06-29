@@ -4,16 +4,46 @@ You are a senior full-stack engineer. Write ALL source code for this project.
 
 
 ## Files to Create
-- ```file:docs/PROJECT_OVERVIEW.md
-- - `docs/PROJECT_OVERVIEW.md` — full scope, success criteria, architecture, risks, phase map
-- docs/PROJECT_OVERVIEW.md
-- - `docs/GLOSSARY.md` — shared vocabulary for downstream phases
-- docs/GLOSSARY.md
-- README.md
-- - CONTEXT.md was empty for functional/non-functional requirements; documented as open
-- - [ ] `docs/PHASE_LOG.md` exists and records Phase 1 as completed with the three deliverable file paths listed — verifiable via `grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md` returning ≥ 4 matches.
-- docs/PHASE_LOG.md
-- grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+- ```file:pyproject.toml
+- # Data validation / domain models
+- packages = ["src/bpa"]
+- ```file:src/bpa/__init__.py
+- ```file:src/bpa/config.py
+- env_file=PROJECT_ROOT / ".env",
+- default="postgresql+asyncpg://bpa:bpa@localhost:5432/bpa"
+- ```file:src/bpa/db.py
+- ```file:src/bpa/logging_setup.py
+- ```file:src/bpa/main.py
+- ```file:requirements.txt
+- ```file:requirements-dev.txt
+- -r requirements.txt
+- ```file:alembic.ini
+- ```file:alembic/env.py
+- ```file:alembic/script.py.mako
+- FROM mcr.microsoft.com/playwright/python:v1.49.1-jammy
+- WORKDIR /app
+- COPY requirements.txt ./
+- RUN pip install --no-cache-dir -r requirements.txt
+- PATH="/app:${PATH}"
+- ```file:docker-compose.yml
+- - bpa_pgdata:/var/lib/postgresql/data
+- DATABASE_URL: postgresql+asyncpg://bpa:bpa@postgres:5432/bpa
+- - .:/app
+- DATABASE_URL=postgresql+asyncpg://bpa:bpa@localhost:5432/bpa
+- ```file:.gitignore
+- __pycache__/
+- *.egg-info/
+- .venv/
+- venv/
+- .env
+- .pytest_cache/
+- .mypy_cache/
+- .ruff_cache/
+- htmlcov/
+- dist/
+- build/
+- .playwright/
+- ```file:README.md
 
 ## SPEC.md (read carefully)
 # SPEC: Business Process Automation — Web Scraping + Data Pipeline (MVP)

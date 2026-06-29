@@ -1,1 +1,1 @@
-mkdir -p docs
+ls src/bpa/ && echo "---" && ls alembic/

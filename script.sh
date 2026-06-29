@@ -1,1 +1,1 @@
-pwd && ls -la
+ls -la

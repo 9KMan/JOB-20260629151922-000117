@@ -1,25 +1,25 @@
 FROM mcr.microsoft.com/playwright/python:v1.49.1-jammy
 
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
 WORKDIR /app
 
-# Install Python deps first (layer cache)
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy source
-COPY src/ ./src/
-COPY alembic/ ./alembic/
-COPY alembic.ini ./
-COPY pyproject.toml ./
+# Ensure installed console scripts (uvicorn, alembic, etc.) are on PATH
+ENV PATH="/app:${PATH}"
 
-# Install package itself
-RUN pip install --no-cache-dir .
+COPY src ./src
+COPY alembic ./alembic
+COPY alembic.ini ./alembic.ini
+COPY pyproject.toml ./pyproject.toml
 
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PATH="/app:${PATH}"
+ENV PYTHONPATH="/app/src"
 
 EXPOSE 8000
 
-# Default command: launch the API. Override via docker-compose for scheduler/cli.
 CMD ["uvicorn", "bpa.main:app", "--host", "0.0.0.0", "--port", "8000"]

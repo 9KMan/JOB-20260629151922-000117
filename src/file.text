@@ -1,13 +1,3 @@
-# Copy to .env and fill in. Never commit the real .env.
-ENVIRONMENT=development
-LOG_LEVEL=INFO
-
-DATABASE_URL=postgresql+asyncpg://bpa:bpa@localhost:5432/bpa
-
-# Telegram (optional)
-# TELEGRAM_BOT_TOKEN=
-# TELEGRAM_CHAT_ID=
-
-# Google Sheets (optional)
-# GOOGLE_SHEETS_CREDENTIALS_PATH=/app/secrets/service-account.json
-# GOOGLE_SHEETS_SPREADSHEET_ID=
+total 8
+drwxr-xr-x 2 root root 4096 Jun 29 15:19 .
+drwxr-xr-x 1 root root 4096 Jun 29 15:19 ..

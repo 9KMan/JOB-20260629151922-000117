@@ -1,5 +1,1 @@
-ls -la
-echo "---"
-ls -la src/bpa/
-echo "---"
-ls -la alembic/
+grep -cE "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

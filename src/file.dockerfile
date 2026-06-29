@@ -2,23 +2,24 @@ FROM mcr.microsoft.com/playwright/python:v1.49.1-jammy
 
 WORKDIR /app
 
-# System deps are inherited from the base image.
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH="/app:${PATH}"
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Playwright browsers are pre-installed in the base image, but ensure
-# the chromium browser is available for the pinned Playwright version.
-RUN playwright install chromium
-
+COPY pyproject.toml ./
 COPY src ./src
 COPY alembic ./alembic
-COPY alembic.ini ./alembic.ini
-COPY pyproject.toml ./pyproject.toml
+COPY alembic.ini ./
 
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PATH="/app:${PATH}" \
-    PYTHONPATH="/app/src"
+RUN pip install --no-cache-dir -e .
 
 EXPOSE 8000
 

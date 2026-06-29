@@ -1,13 +1,29 @@
-/Users/gsd/project/README.md
-/Users/gsd/project/docs/PROJECT_OVERVIEW.md
-/Users/gsd/project/docs/GLOSSARY.md
-/Users/gsd/project/docs/PHASE_LOG.md
----
-       4
----
-5:## Phase 1 — Project Overview
-6:- **Status:** Complete
-11:1. `docs/PROJECT_OVERVIEW.md` — full scope, success criteria, architecture,
-12:2. `docs/GLOSSARY.md` — shared vocabulary for downstream phases.
-13:3. `README.md` — top-level project README pointing at the Phase 1 docs and
-23:grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+.tox/
+.nox/
+dist/
+build/
+.venv/
+venv/
+env/
+.env
+.env.local
+.env.*.local
+.idea/
+.vscode/
+.DS_Store
+*.swp
+*.swo
+.playwright/
+playwright-report/
+test-results/

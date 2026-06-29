@@ -5,15 +5,15 @@ services:
       POSTGRES_USER: bpa
       POSTGRES_PASSWORD: bpa
       POSTGRES_DB: bpa
-    volumes:
-      - bpa_pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    volumes:
+      - bpa_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U bpa -d bpa"]
-      interval: 10s
+      test: ["CMD-SHELL", "pg_isready -U bpa"]
+      interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
 
   app:
     build: .
@@ -22,13 +22,10 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql+asyncpg://bpa:bpa@postgres:5432/bpa
-      ENVIRONMENT: production
-      LOG_LEVEL: INFO
-    volumes:
-      - .:/app
     ports:
       - "8000:8000"
-    command: ["uvicorn", "bpa.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    volumes:
+      - .:/app
 
 volumes:
   bpa_pgdata:

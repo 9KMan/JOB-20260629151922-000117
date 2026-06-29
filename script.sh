@@ -1,2 +1,1 @@
-curl http://localhost:8000/health
-# {"status":"ok"}
+mkdir -p docs

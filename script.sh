@@ -1,1 +1,1 @@
-mkdir -p src/bpa alembic
+pwd && ls -la

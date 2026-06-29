@@ -1,3 +1,4 @@
+cat > src/bpa/main.py << 'EOF'
 """FastAPI application entry point."""
 from __future__ import annotations
 
@@ -31,3 +32,4 @@ app = FastAPI(
 async def health() -> dict[str, str]:
     """Liveness probe."""
     return {"status": "ok"}
+EOF

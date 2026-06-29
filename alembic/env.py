@@ -1,4 +1,5 @@
-"""Alembic environment - uses async SQLAlchemy engine from bpa.config."""
+cat > alembic/env.py << 'EOF'
+"""Alembic environment - uses async SQLAlchemy engine."""
 from __future__ import annotations
 
 import asyncio
@@ -11,15 +12,18 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from bpa.config import get_settings
 
-
+# Alembic Config object
 config = context.config
 
+# Interpret the config file for Python logging
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
+# Inject DB URL from application settings
 settings = get_settings()
 config.set_main_option("sqlalchemy.url", str(settings.database_url))
 
+# Metadata for autogenerate (None in Phase 01; models added in later phases)
 target_metadata = None
 
 
@@ -44,7 +48,7 @@ def do_run_migrations(connection: Connection) -> None:
         context.run_migrations()
 
 
-async def run_async_migrations() -> None:
+async def run_migrations_online() -> None:
     """Run migrations in 'online' mode with async engine."""
     connectable = async_engine_from_config(
         config.get_section(config.config_ini_section, {}),
@@ -58,12 +62,8 @@ async def run_async_migrations() -> None:
     await connectable.dispose()
 
 
-def run_migrations_online() -> None:
-    """Run migrations in 'online' mode."""
-    asyncio.run(run_async_migrations())
-
-
 if context.is_offline_mode():
     run_migrations_offline()
 else:
-    run_migrations_online()
+    asyncio.run(run_migrations_online())
+EOF

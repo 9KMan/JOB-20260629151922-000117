@@ -1,1 +1,20 @@
-- 
+cat > requirements.txt << 'EOF'
+# Pinned runtime dependencies (mirrors pyproject.toml for Docker/CI)
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+pydantic==2.10.3
+pydantic-settings==2.7.0
+sqlalchemy[asyncio]==2.0.36
+asyncpg==0.30.0
+alembic==1.14.0
+httpx==0.28.1
+playwright==1.49.1
+apscheduler==3.10.4
+python-telegram-bot==21.10
+gspread==6.1.4
+google-auth==2.37.0
+tenacity==9.0.0
+structlog==24.4.0
+python-dotenv==1.0.1
+orjson==3.10.12
+EOF

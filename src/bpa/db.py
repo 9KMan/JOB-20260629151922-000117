@@ -1,3 +1,4 @@
+cat > src/bpa/db.py << 'EOF'
 """Async SQLAlchemy engine + session factory."""
 from __future__ import annotations
 
@@ -32,3 +33,4 @@ async def get_session() -> AsyncIterator[AsyncSession]:
     """FastAPI dependency that yields a transactional session."""
     async with SessionLocal() as session:
         yield session
+EOF

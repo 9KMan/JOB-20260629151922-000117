@@ -1,14 +1,7 @@
-python3 -c "import tomllib; tomllib.loads(open('pyproject.toml').read()); print('✅ pyproject.toml valid TOML')"
-python3 -c "from xml.etree import ElementTree; ElementTree.parse('alembic.ini' if False else '/dev/null'); print('skipped xml check')"
-# Just verify alembic.ini is parseable as ini
-python3 -c "
-import configparser
-c = configparser.ConfigParser()
-c.read('alembic.ini')
-sections = c.sections()
-print('✅ alembic.ini has sections:', sections)
-"
-echo "---"
-echo "File sizes:"
-ls -la *.toml *.txt *.ini *.yml Dockerfile .env.example .gitignore .python-version README.md
-ls -la src/bpa/*.py alembic/*.py alembic/*.mako
+echo "=== File listing ===" && ls -la README.md docs/
+echo
+echo "=== Plan-defined verification grep ==="
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+echo
+echo "=== Match count ==="
+grep -cE "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

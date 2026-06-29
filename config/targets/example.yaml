@@ -1,0 +1,11 @@
+# config/targets/example.yaml
+name: example_directory
+url: https://example.com/listings
+schedule: "0 9 * * *"
+enabled: true
+selectors:
+  row: ".listing-card"
+  fields:
+    name:  "h2.listing-title"
+    phone: ".listing-phone"
+    email: ".listing-email"

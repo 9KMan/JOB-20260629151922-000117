@@ -1,6 +1,1 @@
-ls -la docs/ README.md
-echo "---"
-grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
-echo "---"
-echo "Match count:"
-grep -cE "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+find . -type f \( -name '*.py' -o -name '*.toml' -o -name '*.ini' -o -name '*.mako' -o -name 'Dockerfile' -o -name 'docker-compose.yml' -o -name 'requirements*.txt' -o -name '.gitignore' -o -name 'README.md' \) -not -path './.venv/*' | sort

@@ -1,1 +1,1 @@
-mkdir -p docs
+find . -type f \( -name "*.py" -o -name "*.toml" -o -name "*.txt" -o -name "*.ini" -o -name "*.mako" -o -name "Dockerfile" -o -name "docker-compose.yml" -o -name "README.md" -o -name ".gitignore" -o -name ".env.example" -o -name ".python-version" \) -not -path "./.venv/*" -not -path "./__pycache__/*" -not -path "*/__pycache__/*" | sort

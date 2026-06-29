@@ -107,8 +107,6 @@ curl http://localhost:8000/api/v1/health/
 ## 📦 What's in this repo
 
 - `SPEC.md` — full job specification (source of truth)
-- `PROPOSAL.md` — client-facing proposal
-- `COVER_LETTER.txt` — cover letter for bid submission
 - `ROADMAP.md` — phased delivery plan
 - `CLAUDE.md` — operating notes for AI build workers
 - `src/bpa/` — application source (FastAPI + Playwright/httpx scrapers + ETL pipeline)

@@ -1,1 +1,1 @@
-mkdir -p src/bpa alembic
+rm /tmp/verify_phase1.py

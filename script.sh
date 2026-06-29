@@ -1,1 +1,4 @@
-python3 -m py_compile alembic/env.py && echo "OK: alembic/env.py"
+ls -la docs/
+echo "---"
+echo "File line counts:"
+wc -l docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md

@@ -1,3 +1,7 @@
-ls -la docs/ README.md
+ls -la docs/
 echo "---"
+echo "Running verifier check..."
 grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+echo "---"
+echo "Match count:"
+grep -cE "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

@@ -1,2 +1,2 @@
-echo "--- YAML validation (if PyYAML available) ---"
-python3 -c "import yaml; yaml.safe_load(open('docker-compose.yml')); print('PASS: docker-compose.yml is valid YAML')" 2>&1 || echo "(PyYAML not installed - skipping)"
+echo "=== Files created ===" && \
+ls -la pyproject.toml src/bpa/ alembic/ alembic.ini Dockerfile docker-compose.yml requirements.txt requirements-dev.txt .gitignore .python-version .env.example 2>&1

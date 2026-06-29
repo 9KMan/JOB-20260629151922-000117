@@ -1,1 +1,1 @@
-cd /home/user && pwd && ls -la
+pwd && ls -la

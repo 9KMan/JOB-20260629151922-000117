@@ -1,6 +1,1 @@
-cd /home/user && python3 -m py_compile src/bpa/__init__.py 2>&1
-cd /home/user && python3 -m py_compile src/bpa/config.py 2>&1
-cd /home/user && python3 -m py_compile src/bpa/db.py 2>&1
-cd /home/user && python3 -m py_compile src/bpa/logging_setup.py 2>&1
-cd /home/user && python3 -m py_compile src/bpa/main.py 2>&1
-cd /home/user && python3 -m py_compile alembic/env.py 2>&1
+ls -la docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md README.md && echo "--- match count ---" && grep -cE "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md && echo "--- matches ---" && grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

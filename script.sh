@@ -1,2 +1,1 @@
-echo "=== FILE INVENTORY ==="
-find . -type f -not -path '*/__pycache__/*' | sort
+echo "=== File sizes ===" && wc -l docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md README.md && echo "=== File presence ===" && for f in docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md README.md; do test -f "$f" && echo "OK: $f" || echo "MISSING: $f"; done

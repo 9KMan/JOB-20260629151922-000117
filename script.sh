@@ -1,3 +1,5 @@
-for f in src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py alembic/env.py; do
-  python3 -m py_compile "$f" && echo "OK: $f" || echo "FAIL: $f"
-done
+echo "=== File inventory ==="; ls -la README.md docs/
+echo "=== Grep verification (must return >= 4 matches) ==="
+grep -cE "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+echo "=== Grep matches ==="
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

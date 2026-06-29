@@ -1,0 +1,10 @@
+# sites.yaml
+targets:
+  - name: example-directory
+    url: https://example.com/listings
+    schedule: "0 9 * * *"
+    selector_map:
+      row: ".item"
+      name: "h2.title"
+      phone: ".tel"
+      external_id: "[data-id]"

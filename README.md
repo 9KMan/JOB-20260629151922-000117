@@ -22,8 +22,9 @@ Goal: a clean MVP that the operator can extend later — no over-engineering, no
 
 ## Scope
 
-Key functional requirements:
+**Key functional requirements:**
 
+| ID | Requirement | Priority |
 |----|-------------|----------|
 | FR-1 | Scrape 2-3 configurable target sites via Playwright | Must |
 | FR-2 | Parse raw HTML into normalized Pydantic records | Must |
@@ -42,16 +43,16 @@ Key functional requirements:
 
 ## 🏗 Technical Stack
 
-| **Languages & Runtimes** | Python |
-| **Languages & Runtimes** | Google Sheets |
-| **Tools & Libraries** | Playwright |
-| **Tools & Libraries** | APScheduler |
-| **Tools & Libraries** | Telegram Bot |
-| **Web Frameworks** | FastAPI |
+| Category | Technologies |
+| --- | --- |
 | **Databases** | PostgreSQL |
+| **Frameworks** | FastAPI, Playwright |
 | **Infrastructure** | Docker |
+| **Integrations** | Google Sheets, Telegram Bot |
+| **Languages & Runtimes** | Python |
+| **Scheduling** | APScheduler |
 
-_See SPEC.md for the full tech stack and rationale._
+_See [SPEC.md](./SPEC.md) for the full tech stack and rationale._
 
 ---
 

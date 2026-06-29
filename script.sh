@@ -1,1 +1,1 @@
-mkdir -p docs
+docker compose up --build

@@ -1,1 +1,1 @@
-ls -la
+python3 -c "import tomllib; tomllib.loads(open('pyproject.toml').read()); print('pyproject.toml OK')" && python3 -c "import yaml; yaml.safe_load(open('docker-compose.yml')); print('docker-compose.yml OK')" && python3 -c "import configparser; c = configparser.ConfigParser(); c.read('alembic.ini'); print('alembic.ini OK, sections:', c.sections())"

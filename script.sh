@@ -1,1 +1,1 @@
-grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md
+ls -la && echo "--- src/bpa ---" && ls -la src/bpa/ && echo "--- alembic ---" && ls -la alembic/

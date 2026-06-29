@@ -1,0 +1,3 @@
+[17:32:39] Starting gsd-plan-phases for JOB-20260629151922-000117
+[17:32:39] Worker dir: /home/deploy/squad/build-worker/JOB-20260629151922-000117
+[17:32:39] ERROR: SPEC.md not found at /home/deploy/squad/build-worker/JOB-20260629151922-000117/SPEC.md

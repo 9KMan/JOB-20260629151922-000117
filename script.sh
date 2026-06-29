@@ -1,8 +1,1 @@
-python3 -c "
-import tomllib
-with open('pyproject.toml', 'rb') as f:
-    data = tomllib.load(f)
-print('pyproject.toml parsed OK')
-print('Project:', data['project']['name'])
-print('Dependencies count:', len(data['project']['dependencies']))
-"
+echo "=== Line counts ===" && wc -l pyproject.toml src/bpa/*.py requirements.txt requirements-dev.txt alembic.ini alembic/env.py alembic/script.py.mako Dockerfile docker-compose.yml .gitignore README.md

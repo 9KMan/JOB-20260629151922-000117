@@ -1,1 +1,1 @@
-python3 -c "import configparser; c=configparser.ConfigParser(); c.read('alembic.ini'); print('INI OK; sections:', c.sections())"
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

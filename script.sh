@@ -1,1 +1,1 @@
-python3 -m py_compile src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py alembic/env.py && echo "ALL_PYTHON_FILES_PASS"
+ls -la pyproject.toml src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py requirements.txt requirements-dev.txt alembic.ini alembic/env.py alembic/script.py.mako Dockerfile docker-compose.yml .env.example .gitignore

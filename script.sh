@@ -1,1 +1,1 @@
-ls -la pyproject.toml src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py requirements.txt requirements-dev.txt alembic.ini alembic/env.py alembic/script.py.mako tests/__init__.py tests/conftest.py tests/test_health.py tests/test_config.py
+ls -la docs/ && ls -la README.md && wc -l docs/*.md README.md

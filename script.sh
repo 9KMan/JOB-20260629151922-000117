@@ -1,13 +1,7 @@
-cat > README.md << 'READMEEOF'
-# BPA Pipeline
-
-Business Process Automation — Web Scraping + Data Pipeline (MVP).
-
-## Stack
-
-- Python 3.12 + Playwright + FastAPI + PostgreSQL + APScheduler
-- Telegram Bot + Google Sheets exporters
-- Docker Compose for local dev
-
-## Quickstart
-
+# Validate Python (none created in this phase, so nothing to compile)
+# The docs/ files are Markdown — verify they're well-formed by checking structure
+for f in docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md README.md; do
+  echo "=== $f ==="
+  head -5 "$f"
+  echo "Lines: $(wc -l < $f)"
+done

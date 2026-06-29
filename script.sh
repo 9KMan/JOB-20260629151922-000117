@@ -1,8 +1,1 @@
-# 1. Configure environment
-cp .env.example .env        # then fill in DATABASE_URL, TELEGRAM_BOT_TOKEN, etc.
-
-# 2. Boot the stack
-docker compose up -d
-
-# 3. Verify
-curl http://localhost:8000/healthz
+ls -la pyproject.toml requirements.txt requirements-dev.txt .python-version alembic.ini alembic/env.py alembic/script.py.mako src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py

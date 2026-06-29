@@ -1,3 +1,1 @@
-cat > .python-version << 'EOF'
 3.12.7
-EOF

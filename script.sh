@@ -1,6 +1,13 @@
-python3 -m py_compile src/bpa/__init__.py && echo "OK: __init__.py"
-python3 -m py_compile src/bpa/config.py && echo "OK: config.py"
-python3 -m py_compile src/bpa/db.py && echo "OK: db.py"
-python3 -m py_compile src/bpa/logging_setup.py && echo "OK: logging_setup.py"
-python3 -m py_compile src/bpa/main.py && echo "OK: main.py"
-python3 -m py_compile alembic/env.py && echo "OK: env.py"
+# Clone
+git clone <repo-url>
+cd <repo>
+
+# Configure environment
+cp .env.example .env
+# edit .env with DATABASE_URL, TELEGRAM_BOT_TOKEN, GOOGLE_CREDENTIALS_JSON_PATH
+
+# Boot the stack
+docker compose up -d
+
+# Verify
+curl http://localhost:8000/healthz

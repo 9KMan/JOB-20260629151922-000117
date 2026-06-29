@@ -1,1 +1,1 @@
-find src alembic -type f | sort
+mkdir -p docs

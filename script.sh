@@ -1,6 +1,1 @@
-for f in docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md README.md docs/PHASE_LOG.md; do
-  echo "=== $f ==="
-  wc -l "$f"
-  tail -3 "$f"
-  echo ""
-done
+python3 -m py_compile src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py alembic/env.py && echo "ALL_PYTHON_FILES_PASS"

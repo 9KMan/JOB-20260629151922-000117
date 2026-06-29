@@ -1,1 +1,1 @@
-mkdir -p docs
+ls -la pyproject.toml requirements.txt requirements-dev.txt alembic.ini alembic/env.py alembic/script.py.mako src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py

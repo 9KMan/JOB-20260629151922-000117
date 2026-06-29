@@ -1,2 +1,1 @@
-alembic revision --autogenerate -m "msg"
-alembic upgrade head
+docker compose up

@@ -1,1 +1,1 @@
-cd /home/user && ls -la && echo "---" && find . -type f \( -name "*.py" -o -name "*.toml" -o -name "*.txt" -o -name "*.ini" -o -name "*.mako" -o -name ".gitignore" -o -name ".python-version" -o -name "README.md" \) | sort
+echo "=== FILE SIZES ===" && wc -l docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md docs/PHASE_LOG.md README.md && echo "=== HEAD CHECKS ===" && head -3 docs/PROJECT_OVERVIEW.md && echo "---" && head -3 docs/GLOSSARY.md && echo "---" && head -3 docs/PHASE_LOG.md && echo "---" && head -3 README.md

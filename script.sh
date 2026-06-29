@@ -1,1 +1,1 @@
-python3 -c "import tomllib; tomllib.loads(open('pyproject.toml').read()); print('TOML_OK')" 2>&1 || python3 -c "import tomli; tomli.loads(open('pyproject.toml').read()); print('TOML_OK')"
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md

@@ -1,1 +1,2 @@
-find . -type f -not -path './.git/*' | sort
+# Run the exact verification command from the plan
+grep -E "Phase 1.*Complete|docs/PROJECT_OVERVIEW\.md|docs/GLOSSARY\.md|README\.md" docs/PHASE_LOG.md | wc -l

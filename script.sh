@@ -1,11 +1,14 @@
-test -s docs/PROJECT_OVERVIEW.md && echo "PROJECT_OVERVIEW.md: OK ($(wc -l < docs/PROJECT_OVERVIEW.md) lines)"
-test -s docs/GLOSSARY.md && echo "GLOSSARY.md: OK ($(wc -l < docs/GLOSSARY.md) lines)"
-
-# Count heading levels to verify structure
-echo "PROJECT_OVERVIEW.md headings:"
-grep -c '^#' docs/PROJECT_OVERVIEW.md
-echo "GLOSSARY.md headings:"
-grep -c '^#' docs/GLOSSARY.md
-
-# Verify no heredoc / EOF leakage
-grep -n 'MDEOF\|EOF\|<<' docs/PROJECT_OVERVIEW.md docs/GLOSSARY.md && echo "WARNING: heredoc residue found" || echo "No heredoc residue: OK"
+python3 -c "import tomllib; tomllib.loads(open('pyproject.toml').read()); print('✅ pyproject.toml valid TOML')"
+python3 -c "from xml.etree import ElementTree; ElementTree.parse('alembic.ini' if False else '/dev/null'); print('skipped xml check')"
+# Just verify alembic.ini is parseable as ini
+python3 -c "
+import configparser
+c = configparser.ConfigParser()
+c.read('alembic.ini')
+sections = c.sections()
+print('✅ alembic.ini has sections:', sections)
+"
+echo "---"
+echo "File sizes:"
+ls -la *.toml *.txt *.ini *.yml Dockerfile .env.example .gitignore .python-version README.md
+ls -la src/bpa/*.py alembic/*.py alembic/*.mako

@@ -1,6 +1,1 @@
-python3 -m py_compile src/bpa/__init__.py && echo "PASS: src/bpa/__init__.py"
-python3 -m py_compile src/bpa/config.py && echo "PASS: src/bpa/config.py"
-python3 -m py_compile src/bpa/db.py && echo "PASS: src/bpa/db.py"
-python3 -m py_compile src/bpa/logging_setup.py && echo "PASS: src/bpa/logging_setup.py"
-python3 -m py_compile src/bpa/main.py && echo "PASS: src/bpa/main.py"
-python3 -m py_compile alembic/env.py && echo "PASS: alembic/env.py"
+ls -la pyproject.toml requirements.txt requirements-dev.txt alembic.ini docker-compose.yml .gitignore .python-version README.md .env.example docker/Dockerfile src/bpa/__init__.py src/bpa/config.py src/bpa/db.py src/bpa/logging_setup.py src/bpa/main.py alembic/env.py alembic/script.py.mako
